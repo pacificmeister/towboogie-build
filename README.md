@@ -1,6 +1,10 @@
 # 🚀 Tow Boogie Build Configurator
 
+**[👉 Launch the Configurator](https://pacificmeister.github.io/towboogie-build/)**
+
 An interactive web tool for configuring DIY tow boogie (electric tow device for foiling) builds. Choose components, see real-time cost estimates, get a shopping list with buy links, and compare your build to commercial options.
+
+Build your own for **$850–$2,000** — save **$6,000+** vs commercial options like Zero Tow V3 ($7,750).
 
 **Built by [PacificMeister](https://foil.zone) — the open-source eFoil pioneer.**
 
