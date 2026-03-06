@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tow Boogie Build Configurator — PacificMeister</title>
+  <meta name="description" content="Configure your DIY tow boogie build. Choose components, see real-time costs, and get a shopping list with buy links. Based on 100+ proven builds from FOIL.zone. Open-source tool by PacificMeister.">
+  <meta name="keywords" content="tow boogie, DIY, electric foil, efoil, build configurator, PacificMeister, FOIL.zone, tow surfing, prone foil">
+  <meta name="author" content="PacificMeister">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DIY Tow Boogie Build Configurator — PacificMeister">
+  <meta property="og:description" content="Configure your DIY tow boogie for $850–$2,000 — save $6,000+ vs commercial options. Real components, real prices, proven builds.">
+  <meta property="og:url" content="https://towboogie-configurator.vercel.app">
+  <meta property="og:site_name" content="PacificMeister">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DIY Tow Boogie Build Configurator">
+  <meta name="twitter:description" content="Build your own tow boogie for $850–$2,000. Interactive configurator with real components and buy links.">
+
+  <!-- Favicon (inline SVG rocket) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://towboogie-configurator.vercel.app">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Tow Boogie Build Configurator",
+    "description": "Interactive tool for configuring DIY electric tow boogie builds with real-time cost estimates and shopping lists.",
+    "url": "https://towboogie-configurator.vercel.app",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "Web",
+    "author": {
+      "@type": "Person",
+      "name": "PacificMeister",
+      "url": "https://foil.zone"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="logo">
+          <span class="logo-icon">🚀</span>
+          <div>
+            <h1>Tow Boogie Builder</h1>
+            <p class="subtitle">by PacificMeister &middot; Open Source</p>
+          </div>
+        </div>
+        <div class="header-stats" id="header-stats">
+          <div class="stat-pill">
+            <span class="stat-label">Total</span>
+            <span class="stat-value" id="header-total">$0</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-label">Weight</span>
+            <span class="stat-value" id="header-weight">0 kg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h2>Build Your Own Tow Boogie</h2>
+      <p>Configure components, see real-time costs, and get a complete shopping list. <br>Based on proven DIY builds from the <a href="https://foil.zone" target="_blank">FOIL.zone</a> community.</p>
+    </div>
+  </section>
+
+  <!-- Configurator -->
+  <main class="container">
+    <div class="configurator-grid">
+      <!-- Left: Component Selectors -->
+      <div class="components-panel">
+
+        <!-- Propulsion -->
+        <section class="category" data-category="propulsion">
+          <div class="category-header">
+            <h3><span class="cat-icon">⚡</span> Propulsion</h3>
+            <span class="category-total" data-cat-total="propulsion">$0</span>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Motor</label>
+            <div class="options" data-component="motor">
+              <button class="option selected" data-id="flipsky-65161-120kv" data-price="298" data-weight="3.0">
+                <div class="opt-name">Flipsky 65161 120KV</div>
+                <div class="opt-detail">6kW, IP68 — The proven standard</div>
+                <div class="opt-price">$298</div>
+              </button>
+              <button class="option" data-id="flipsky-65161-100kv" data-price="298" data-weight="3.0">
+                <div class="opt-name">Flipsky 65161 100KV</div>
+                <div class="opt-detail">6kW, IP68 — Higher torque, lower speed</div>
+                <div class="opt-price">$298</div>
+              </button>
+              <button class="option" data-id="maytech-65162" data-price="380" data-weight="3.2">
+                <div class="opt-name">Maytech 65162</div>
+                <div class="opt-detail">6kW, better QC — Premium choice</div>
+                <div class="opt-price">$380</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">ESC (Speed Controller)</label>
+            <div class="options" data-component="esc">
+              <button class="option selected" data-id="fsesc-75200" data-price="300" data-weight="0.6">
+                <div class="opt-name">Flipsky FSESC 75200 Pro V2</div>
+                <div class="opt-detail">200A, VESC-based, water cooling</div>
+                <div class="opt-price">$300</div>
+              </button>
+              <button class="option" data-id="fsesc-75100" data-price="180" data-weight="0.4">
+                <div class="opt-name">Flipsky FSESC 75100</div>
+                <div class="opt-detail">100A, budget option — lower headroom</div>
+                <div class="opt-price">$180</div>
+              </button>
+              <button class="option" data-id="makerx-dv6" data-price="350" data-weight="0.5">
+                <div class="opt-name">MakerX DV6 Pro</div>
+                <div class="opt-detail">200A, dual-motor ready, premium</div>
+                <div class="opt-price">$350</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Propeller</label>
+            <div class="options" data-component="prop">
+              <button class="option selected" data-id="flipsky-alu-prop" data-price="50" data-weight="0.3">
+                <div class="opt-name">Flipsky Aluminum Prop</div>
+                <div class="opt-detail">65161 compatible — get a spare!</div>
+                <div class="opt-price">$50</div>
+              </button>
+              <button class="option" data-id="custom-cnc-prop" data-price="120" data-weight="0.25">
+                <div class="opt-name">Custom CNC Prop</div>
+                <div class="opt-detail">Optimized pitch for towing duty</div>
+                <div class="opt-price">$120</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Prop Guard</label>
+            <div class="options" data-component="propguard">
+              <button class="option selected" data-id="3d-print-guard" data-price="15" data-weight="0.15">
+                <div class="opt-name">3D Printed Guard</div>
+                <div class="opt-detail">PETG/ASA — STLs on MakerWorld</div>
+                <div class="opt-price">$15</div>
+              </button>
+              <button class="option" data-id="metal-guard" data-price="45" data-weight="0.3">
+                <div class="opt-name">Stainless Steel Guard</div>
+                <div class="opt-detail">Welded SS316 — bombproof</div>
+                <div class="opt-price">$45</div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Remote -->
+        <section class="category" data-category="remote">
+          <div class="category-header">
+            <h3><span class="cat-icon">📡</span> Remote Control</h3>
+            <span class="category-total" data-cat-total="remote">$0</span>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Remote</label>
+            <div class="options" data-component="remote">
+              <button class="option selected" data-id="vx3-pro" data-price="110" data-weight="0.15">
+                <div class="opt-name">Flipsky VX3 Pro</div>
+                <div class="opt-detail">IP67, OLED, GPS, cruise — standard choice</div>
+                <div class="opt-price">$110</div>
+              </button>
+              <button class="option" data-id="vx3" data-price="70" data-weight="0.12">
+                <div class="opt-name">Flipsky VX3</div>
+                <div class="opt-detail">Basic, waterproof — budget option</div>
+                <div class="opt-price">$70</div>
+              </button>
+              <button class="option" data-id="maytech-mtskr2005wf" data-price="140" data-weight="0.18">
+                <div class="opt-name">Maytech MTSKR2005WF</div>
+                <div class="opt-detail">Waterproof, screen, cruise control</div>
+                <div class="opt-price">$140</div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Battery -->
+        <section class="category" data-category="battery">
+          <div class="category-header">
+            <h3><span class="cat-icon">🔋</span> Battery System</h3>
+            <span class="category-total" data-cat-total="battery">$0</span>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Battery Pack</label>
+            <div class="options" data-component="battery">
+              <button class="option selected" data-id="diy-12s8p" data-price="450" data-weight="5.5"
+                data-runtime="1.5-2 hrs" data-capacity="2.0 kWh" data-voltage="50.4V">
+                <div class="opt-name">DIY 12S8P Molicel P42A</div>
+                <div class="opt-detail">2kWh, 96 cells — best value, PacificMeister way</div>
+                <div class="opt-price">$450</div>
+                <div class="opt-specs">
+                  <span class="spec">2.0 kWh</span>
+                  <span class="spec">50.4V</span>
+                  <span class="spec">5.5 kg</span>
+                  <span class="spec">~1.5-2 hr runtime</span>
+                </div>
+              </button>
+              <button class="option" data-id="used-efoil-battery" data-price="300" data-weight="6.0"
+                data-runtime="1-1.5 hrs" data-capacity="~1.5-2 kWh" data-voltage="50.4V">
+                <div class="opt-name">Used eFoil Battery (12S)</div>
+                <div class="opt-detail">From FOIL.zone classifieds — fastest path</div>
+                <div class="opt-price">~$300</div>
+                <div class="opt-specs">
+                  <span class="spec">~1.5-2 kWh</span>
+                  <span class="spec">50.4V</span>
+                  <span class="spec">~6 kg</span>
+                  <span class="spec">~1-1.5 hr runtime</span>
+                </div>
+              </button>
+              <button class="option" data-id="flipsky-battery" data-price="600" data-weight="7.0"
+                data-runtime="1.5-2 hrs" data-capacity="2.0 kWh" data-voltage="50.4V">
+                <div class="opt-name">Flipsky Waterproof Battery</div>
+                <div class="opt-detail">12S, IP68, turnkey — plug and play</div>
+                <div class="opt-price">$600</div>
+                <div class="opt-specs">
+                  <span class="spec">2.0 kWh</span>
+                  <span class="spec">50.4V</span>
+                  <span class="spec">7 kg</span>
+                  <span class="spec">~1.5-2 hr runtime</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div class="component-group" id="bms-group">
+            <label class="group-label">BMS (Battery Management)</label>
+            <div class="options" data-component="bms">
+              <button class="option selected" data-id="smart-bms" data-price="55" data-weight="0.15">
+                <div class="opt-name">12S 100A Smart BMS</div>
+                <div class="opt-detail">Daly/JBD, Bluetooth monitoring</div>
+                <div class="opt-price">$55</div>
+              </button>
+              <button class="option" data-id="basic-bms" data-price="30" data-weight="0.1">
+                <div class="opt-name">12S 100A Basic BMS</div>
+                <div class="opt-detail">No Bluetooth — budget option</div>
+                <div class="opt-price">$30</div>
+              </button>
+              <button class="option" data-id="no-bms" data-price="0" data-weight="0" data-note="Included with pre-built packs">
+                <div class="opt-name">Included / Not Needed</div>
+                <div class="opt-detail">Pre-built batteries include BMS</div>
+                <div class="opt-price">$0</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Charger</label>
+            <div class="options" data-component="charger">
+              <button class="option selected" data-id="5a-charger" data-price="45" data-weight="0.8">
+                <div class="opt-name">50.4V 5A Smart Charger</div>
+                <div class="opt-detail">~2hr full charge — standard</div>
+                <div class="opt-price">$45</div>
+              </button>
+              <button class="option" data-id="2a-charger" data-price="30" data-weight="0.5">
+                <div class="opt-name">50.4V 2A Charger</div>
+                <div class="opt-detail">Slower charge, cheaper — ~5hrs</div>
+                <div class="opt-price">$30</div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Hull & Structure -->
+        <section class="category" data-category="hull">
+          <div class="category-header">
+            <h3><span class="cat-icon">🏗️</span> Hull & Structure</h3>
+            <span class="category-total" data-cat-total="hull">$0</span>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Hull</label>
+            <div class="options" data-component="hull">
+              <button class="option selected" data-id="bodyboard" data-price="40" data-weight="1.5">
+                <div class="opt-name">Modified Bodyboard</div>
+                <div class="opt-detail">~105×50cm foam — cheapest, proven by community</div>
+                <div class="opt-price">$40</div>
+              </button>
+              <button class="option" data-id="inflatable-pvc" data-price="200" data-weight="2.5">
+                <div class="opt-name">Drop-Stitch Inflatable</div>
+                <div class="opt-detail">PVC, packable — like Zero Tow</div>
+                <div class="opt-price">$200</div>
+              </button>
+              <button class="option" data-id="custom-composite" data-price="400" data-weight="2.0">
+                <div class="opt-name">Custom Composite Hull</div>
+                <div class="opt-detail">Fiberglass/carbon layup — performance</div>
+                <div class="opt-price">$400</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Electronics Enclosure</label>
+            <div class="options" data-component="enclosure">
+              <button class="option selected" data-id="ip68-box" data-price="30" data-weight="0.8">
+                <div class="opt-name">IP68 Project Box</div>
+                <div class="opt-detail">380×310×115mm — AliExpress standard</div>
+                <div class="opt-price">$30</div>
+              </button>
+              <button class="option" data-id="pelican-case" data-price="80" data-weight="1.2">
+                <div class="opt-name">Pelican/Nanuk Case</div>
+                <div class="opt-detail">Military-grade waterproof — premium</div>
+                <div class="opt-price">$80</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Frame & Tow System</label>
+            <div class="options" data-component="frame">
+              <button class="option selected" data-id="alu-tow-bar" data-price="50" data-weight="0.6">
+                <div class="opt-name">Aluminum Profile + Dyneema Rope</div>
+                <div class="opt-detail">25×25mm alu bar + 15m Dyneema + handle</div>
+                <div class="opt-price">$50</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Motor Mount</label>
+            <div class="options" data-component="mount">
+              <button class="option selected" data-id="3d-print-mount" data-price="20" data-weight="0.2">
+                <div class="opt-name">3D Printed Mount + Pod</div>
+                <div class="opt-detail">PETG/ASA, 5° pitch — STLs available</div>
+                <div class="opt-price">$20</div>
+              </button>
+              <button class="option" data-id="cnc-alu-mount" data-price="80" data-weight="0.4">
+                <div class="opt-name">CNC Aluminum Mount</div>
+                <div class="opt-detail">Precision machined — permanent</div>
+                <div class="opt-price">$80</div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Safety & Waterproofing -->
+        <section class="category" data-category="safety">
+          <div class="category-header">
+            <h3><span class="cat-icon">🛡️</span> Safety & Waterproofing</h3>
+            <span class="category-total" data-cat-total="safety">$0</span>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Waterproofing Kit</label>
+            <div class="options" data-component="waterproofing">
+              <button class="option selected" data-id="standard-wp" data-price="48" data-weight="0.3">
+                <div class="opt-name">Standard Kit</div>
+                <div class="opt-detail">Conformal coat + self-amalgamating tape + cable glands + marine sealant</div>
+                <div class="opt-price">$48</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Safety Equipment</label>
+            <div class="options" data-component="safety">
+              <button class="option selected" data-id="standard-safety" data-price="25" data-weight="0.4">
+                <div class="opt-name">Standard Safety Kit</div>
+                <div class="opt-detail">Kill switch lanyard + buoyancy foam + SS316 hardware</div>
+                <div class="opt-price">$25</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="component-group">
+            <label class="group-label">Wiring & Connectors</label>
+            <div class="options" data-component="wiring">
+              <button class="option selected" data-id="standard-wiring" data-price="30" data-weight="0.3">
+                <div class="opt-name">Standard Wiring Kit</div>
+                <div class="opt-detail">8-10AWG silicone, XT90-S anti-spark, Anderson connectors</div>
+                <div class="opt-price">$30</div>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right: Summary Panel -->
+      <aside class="summary-panel" id="summary-panel">
+        <div class="summary-sticky">
+          <h3>Your Build</h3>
+
+          <!-- Build Tier Badge -->
+          <div class="build-tier" id="build-tier">
+            <span class="tier-badge budget">💰 Budget Build</span>
+          </div>
+
+          <!-- Cost Breakdown -->
+          <div class="cost-breakdown" id="cost-breakdown">
+            <div class="cost-row">
+              <span>⚡ Propulsion</span>
+              <span id="sum-propulsion">$0</span>
+            </div>
+            <div class="cost-row">
+              <span>📡 Remote</span>
+              <span id="sum-remote">$0</span>
+            </div>
+            <div class="cost-row">
+              <span>🔋 Battery</span>
+              <span id="sum-battery">$0</span>
+            </div>
+            <div class="cost-row">
+              <span>🏗️ Hull & Structure</span>
+              <span id="sum-hull">$0</span>
+            </div>
+            <div class="cost-row">
+              <span>🛡️ Safety & Wiring</span>
+              <span id="sum-safety">$0</span>
+            </div>
+            <div class="cost-divider"></div>
+            <div class="cost-row total-row">
+              <span>Total Estimated Cost</span>
+              <span id="sum-total">$0</span>
+            </div>
+          </div>
+
+          <!-- Performance Estimates -->
+          <div class="perf-card">
+            <h4>Performance Estimates</h4>
+            <div class="perf-grid">
+              <div class="perf-item">
+                <span class="perf-label">Total Weight</span>
+                <span class="perf-value" id="perf-weight">0 kg</span>
+              </div>
+              <div class="perf-item">
+                <span class="perf-label">Max Speed</span>
+                <span class="perf-value" id="perf-speed">~20 km/h</span>
+              </div>
+              <div class="perf-item">
+                <span class="perf-label">Runtime</span>
+                <span class="perf-value" id="perf-runtime">—</span>
+              </div>
+              <div class="perf-item">
+                <span class="perf-label">Battery</span>
+                <span class="perf-value" id="perf-capacity">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparison to Zero Tow -->
+          <div class="comparison-card">
+            <h4>vs Zero Tow V3 ($7,750 USD)</h4>
+            <div class="savings" id="savings">
+              <span class="savings-label">You save</span>
+              <span class="savings-value" id="savings-amount">$0</span>
+            </div>
+            <div class="comparison-bar">
+              <div class="bar-yours" id="bar-yours" style="width:10%">
+                <span>Your build</span>
+              </div>
+              <div class="bar-zerotow">
+                <span>Zero Tow</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="actions">
+            <button class="btn-primary" id="btn-shopping-list" onclick="toggleShoppingList()">
+              📋 View Shopping List
+            </button>
+            <button class="btn-secondary" onclick="shareBuild()">
+              🔗 Share Build
+            </button>
+            <button class="btn-secondary" onclick="printBuild()">
+              🖨️ Print Build Sheet
+            </button>
+            <a class="btn-secondary" href="https://foil.zone/t/tow-boogie-general-design/20560" target="_blank">
+              💬 Discuss on FOIL.zone
+            </a>
+          </div>
+
+          <!-- Shopping List (toggleable) -->
+          <div class="shopping-list" id="shopping-list" style="display:none">
+            <h4>Shopping List</h4>
+            <div id="shopping-items"></div>
+            <button class="btn-copy" onclick="copyShoppingList()">📋 Copy to Clipboard</button>
+          </div>
+
+          <!-- Community Tips -->
+          <div class="tips-card">
+            <h4>💡 Community Build Tips</h4>
+            <ul>
+              <li>Mount motor at the <strong>very rear</strong> — front/center causes nosedive</li>
+              <li>Tow point goes <strong>under</strong> the hull, not on top</li>
+              <li>Add <strong>5° downward pitch</strong> to motor pod</li>
+              <li>Conformal coat <strong>all PCBs</strong> before assembly</li>
+              <li>Aluminum profile (25×25mm) = game-changer for rigidity</li>
+              <li>Always bench-test electronics before hull install</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>
+        Built with ❤️ by <a href="https://foil.zone" target="_blank">PacificMeister</a> &middot;
+        Data from 100+ DIY builds on <a href="https://foil.zone" target="_blank">FOIL.zone</a> &middot;
+        <a href="https://github.com/pacificmeister" target="_blank">Open Source</a>
+      </p>
+      <p class="disclaimer">Prices are estimates and may vary. Building electric watercraft involves risks — always follow safe battery handling practices and test in controlled conditions.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
