@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIY Tow Boogie Build Guide — PacificMeister</title>
+  <meta name="description" content="Complete guide to building your own DIY tow boogie for $750–$1,500. Step-by-step instructions, shopping list, community builds, and expert tips from PacificMeister and the FOIL.zone community.">
+  <meta name="keywords" content="tow boogie build guide, DIY tow boogie, electric tow surfing, prone foil tow, efoil tow device, PacificMeister, FOIL.zone, Flipsky 65161, tow boogie shopping list">
+  <meta name="author" content="PacificMeister">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="DIY Tow Boogie Build Guide — PacificMeister">
+  <meta property="og:description" content="Build your own tow boogie for $750–$1,500. Complete guide with step-by-step assembly, shopping list, and community-proven designs.">
+  <meta property="og:url" content="https://pacificmeister.github.io/towboogie-build/guide.html">
+  <meta property="og:site_name" content="PacificMeister">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DIY Tow Boogie Build Guide — PacificMeister">
+  <meta name="twitter:description" content="Build your own electric tow boogie for $750–$1,500. Step-by-step from the open-source eFoil pioneer.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+  <link rel="canonical" href="https://pacificmeister.github.io/towboogie-build/guide.html">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Build a DIY Tow Boogie",
+    "description": "Complete guide to building an electric tow boogie for prone foil surfing. From component selection to water testing.",
+    "url": "https://pacificmeister.github.io/towboogie-build/guide.html",
+    "totalTime": "P4D",
+    "estimatedCost": {
+      "@type": "MonetaryAmount",
+      "currency": "USD",
+      "value": "750-1500"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "PacificMeister",
+      "url": "https://foil.zone"
+    },
+    "tool": [
+      "Spot welder (for battery building)",
+      "Soldering iron",
+      "3D printer (PLA/PETG)",
+      "Drill with marine bits",
+      "Multimeter",
+      "VESC Tool software"
+    ],
+    "step": [
+      {"@type": "HowToStep", "name": "Electronics Assembly", "text": "Configure ESC, build battery, wire motor, test on bench"},
+      {"@type": "HowToStep", "name": "Hull Preparation", "text": "Mount tow bar, cut motor hole, install electronics box"},
+      {"@type": "HowToStep", "name": "Motor Installation", "text": "3D print motor pod, install motor with 5° pitch, attach prop guard"},
+      {"@type": "HowToStep", "name": "Water Testing", "text": "Float test, shallow motor test, first tow without rider, then with rider"}
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f172a;
+      --bg2: #1e293b;
+      --bg3: #334155;
+      --text: #f1f5f9;
+      --text2: #94a3b8;
+      --text3: #64748b;
+      --accent: #0ea5e9;
+      --accent2: #38bdf8;
+      --green: #22c55e;
+      --yellow: #eab308;
+      --orange: #f97316;
+      --red: #ef4444;
+      --purple: #a78bfa;
+      --border: #334155;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── Navigation ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    .nav-brand {
+      font-size: 18px; font-weight: 800; letter-spacing: -0.5px;
+      color: var(--text); text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-brand:hover { color: var(--accent); }
+    .nav-links { display: flex; gap: 6px; }
+    .nav-links a {
+      color: var(--text2); text-decoration: none; font-size: 13px; font-weight: 600;
+      padding: 6px 12px; border-radius: 6px; transition: all 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--bg2); }
+    .nav-links a.active { color: var(--accent); background: rgba(14, 165, 233, 0.1); }
+    .nav-cta {
+      background: var(--accent) !important; color: white !important;
+      border-radius: 8px !important; font-weight: 700 !important;
+    }
+    .nav-cta:hover { background: var(--accent2) !important; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 80px 24px 60px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 50% 80%, rgba(14, 165, 233, 0.06) 0%, transparent 50%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3);
+      color: var(--accent2); font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+      padding: 4px 14px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(2em, 5vw, 3.5em); font-weight: 900;
+      letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--text) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p { font-size: 18px; color: var(--text2); max-width: 600px; margin: 0 auto 32px; }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+      margin-top: 40px;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-value { font-size: 2em; font-weight: 900; color: var(--accent); }
+    .hero-stat-label { font-size: 12px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
+    .hero-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 10px; font-size: 15px;
+      font-weight: 700; text-decoration: none; transition: all 0.15s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--text); border: 2px solid var(--border); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Content ── */
+    .content { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Section ── */
+    .section { padding: 60px 0; }
+    .section + .section { border-top: 1px solid var(--border); }
+    .section-label {
+      font-size: 11px; font-weight: 800; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;
+    }
+    .section h2 {
+      font-size: 2em; font-weight: 900; letter-spacing: -1px;
+      margin-bottom: 12px; line-height: 1.2;
+    }
+    .section-intro { font-size: 17px; color: var(--text2); margin-bottom: 36px; max-width: 700px; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: rgba(14, 165, 233, 0.3); }
+    .card h3 { font-size: 1.3em; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .card p { color: var(--text2); }
+
+    /* ── Grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+    /* ── Cost Comparison ── */
+    .comparison-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+    .comparison-table th {
+      text-align: left; font-size: 11px; color: var(--text3);
+      text-transform: uppercase; letter-spacing: 1px;
+      padding: 10px 16px; border-bottom: 2px solid var(--border);
+    }
+    .comparison-table td {
+      padding: 14px 16px; border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+      font-size: 14px;
+    }
+    .comparison-table tr:hover td { background: rgba(14, 165, 233, 0.03); }
+    .price-tag { font-weight: 800; font-size: 1.1em; }
+    .price-green { color: var(--green); }
+    .price-yellow { color: var(--yellow); }
+    .price-red { color: var(--red); }
+
+    /* ── Timeline ── */
+    .build-timeline { position: relative; padding-left: 32px; }
+    .build-timeline::before {
+      content: ''; position: absolute; left: 12px; top: 0; bottom: 0;
+      width: 3px; background: linear-gradient(180deg, var(--accent), var(--green));
+      border-radius: 2px;
+    }
+    .timeline-step { position: relative; margin-bottom: 32px; }
+    .timeline-step:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -32px; top: 4px;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--bg2); border: 3px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 900; color: var(--accent);
+    }
+    .timeline-step h3 { font-size: 1.2em; font-weight: 800; margin-bottom: 6px; }
+    .timeline-step p { color: var(--text2); font-size: 14px; }
+    .timeline-day { font-size: 11px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .timeline-checklist { list-style: none; margin-top: 12px; }
+    .timeline-checklist li {
+      padding: 6px 0; font-size: 14px; color: var(--text2);
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .timeline-checklist li::before { content: '☐'; color: var(--accent); font-size: 16px; flex-shrink: 0; }
+
+    /* ── Key Learnings ── */
+    .learning {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px; border-radius: 10px; margin-bottom: 10px;
+      background: var(--bg2); border-left: 3px solid var(--accent);
+    }
+    .learning-icon { font-size: 1.5em; flex-shrink: 0; }
+    .learning-text { flex: 1; }
+    .learning-text strong { color: var(--text); display: block; margin-bottom: 2px; }
+    .learning-text span { color: var(--text2); font-size: 14px; }
+
+    /* ── Shopping Categories ── */
+    .shop-category {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden; margin-bottom: 16px;
+    }
+    .shop-category-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; cursor: pointer; user-select: none;
+    }
+    .shop-category-head:hover { background: rgba(14, 165, 233, 0.03); }
+    .shop-category-head h3 { font-size: 1.1em; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+    .shop-category-price { font-size: 1.1em; font-weight: 800; color: var(--accent); }
+    .shop-category-body { padding: 0 20px 16px; display: none; }
+    .shop-category.open .shop-category-body { display: block; }
+    .shop-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0; border-bottom: 1px solid rgba(51, 65, 85, 0.3);
+      font-size: 14px;
+    }
+    .shop-item:last-child { border-bottom: none; }
+    .shop-item-name { font-weight: 600; color: var(--text); flex: 1; }
+    .shop-item-price { font-weight: 700; color: var(--accent); margin-left: 12px; white-space: nowrap; }
+    .shop-item-source { font-size: 12px; color: var(--text3); margin-left: 12px; }
+    .shop-item a { color: var(--accent2); text-decoration: none; }
+    .shop-item a:hover { text-decoration: underline; }
+
+    /* ── Community ── */
+    .community-link {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px; background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; text-decoration: none; color: var(--text);
+      transition: all 0.15s; margin-bottom: 10px;
+    }
+    .community-link:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .community-link-icon { font-size: 1.5em; }
+    .community-link-info { flex: 1; }
+    .community-link-title { font-weight: 700; font-size: 15px; }
+    .community-link-desc { font-size: 13px; color: var(--text2); }
+    .community-link-arrow { color: var(--text3); font-size: 1.2em; }
+
+    /* ── Warning / Tip boxes ── */
+    .callout {
+      padding: 16px 20px; border-radius: 10px; margin: 16px 0;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .callout-icon { font-size: 1.3em; flex-shrink: 0; }
+    .callout p { font-size: 14px; }
+    .callout-warn { background: rgba(234, 179, 8, 0.08); border: 1px solid rgba(234, 179, 8, 0.2); }
+    .callout-warn p { color: var(--yellow); }
+    .callout-tip { background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.2); }
+    .callout-tip p { color: var(--green); }
+    .callout-info { background: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.2); }
+    .callout-info p { color: var(--accent2); }
+
+    /* ── TOC ── */
+    .toc {
+      position: sticky; top: 72px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .toc h4 { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .toc a {
+      display: block; font-size: 13px; color: var(--text2);
+      text-decoration: none; padding: 5px 0;
+      border-left: 2px solid transparent;
+      padding-left: 12px; transition: all 0.15s;
+    }
+    .toc a:hover { color: var(--accent); border-left-color: var(--accent); }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 40px 24px; text-align: center;
+      border-top: 1px solid var(--border);
+      margin-top: 60px;
+    }
+    .footer p { font-size: 14px; color: var(--text3); }
+    .footer a { color: var(--accent); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 16px 40px; }
+      .hero h1 { font-size: 1.8em; }
+      .hero-stats { gap: 24px; }
+      .section { padding: 40px 0; }
+      .nav-links a:not(.nav-cta) { display: none; }
+    }
+
+    /* ── Print styles ── */
+    @media print {
+      .nav, .hero-actions, .footer, .toc, .callout { display: none; }
+      body { background: white; color: black; }
+      .card, .shop-category { border: 1px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">🚀 PacificMeister</a>
+    <div class="nav-links">
+      <a href="#why">Why DIY</a>
+      <a href="#guide">Build Guide</a>
+      <a href="#parts">Parts</a>
+      <a href="#community">Community</a>
+      <a href="index.html" class="nav-cta">⚡ Configurator</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-badge">📖 OPEN-SOURCE BUILD GUIDE</div>
+  <h1>Build Your Own<br>Tow Boogie</h1>
+  <p>The complete guide to building a DIY electric tow device for prone foil surfing — for a fraction of the commercial price. Based on 100+ community builds.</p>
+  <div class="hero-actions">
+    <a href="index.html" class="btn btn-primary">⚡ Open Build Configurator</a>
+    <a href="#guide" class="btn btn-outline">📖 Read the Guide</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-value">$750<span style="font-size:0.5em;color:var(--text3)">–$1,500</span></div>
+      <div class="hero-stat-label">Total Build Cost</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">4</div>
+      <div class="hero-stat-label">Build Days</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">$6K+</div>
+      <div class="hero-stat-label">Savings vs Commercial</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">100+</div>
+      <div class="hero-stat-label">Community Builds</div>
+    </div>
+  </div>
+</section>
+
+<div class="content">
+
+  <!-- ═══ WHAT IS A TOW BOOGIE ═══ -->
+  <section class="section" id="what">
+    <div class="section-label">Introduction</div>
+    <h2>What Is a Tow Boogie?</h2>
+    <p class="section-intro">An electric-powered unmanned watercraft that tows a foil surfer up to takeoff speed. Release the rope, catch the wave, ride pure — no motor weight on your board.</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <h3>🏄 Naked Board Feel</h3>
+        <p>Unlike eFoils, the motor stays in the water. Your board is clean, light, and performs like a pure prone foil.</p>
+      </div>
+      <div class="card">
+        <h3>👥 Share Sessions</h3>
+        <p>One tow boogie serves multiple riders. Take turns getting towed — perfect for group sessions.</p>
+      </div>
+      <div class="card">
+        <h3>🌊 Catch Real Waves</h3>
+        <p>Get towed to the lineup, release, and ride ocean swells. Or use it for flat-water downwind runs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHY DIY ═══ -->
+  <section class="section" id="why">
+    <div class="section-label">The Case for DIY</div>
+    <h2>Why Build Your Own?</h2>
+    <p class="section-intro">Commercial tow boogies cost $7,000–$9,000+. A DIY build uses the same proven components for a fraction of the cost.</p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr><th>Option</th><th>Cost</th><th>Pros</th><th>Cons</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Zero Tow V3</strong><br><span style="color:var(--text3);font-size:12px">Market leader (Australia)</span></td>
+          <td><span class="price-tag price-red">$8,300+</span><br><span style="font-size:11px;color:var(--text3)">incl. shipping to US</span></td>
+          <td style="font-size:13px">Turnkey, smart remote, GPS follow, inflatable hull, proven</td>
+          <td style="font-size:13px">12-week wait, expensive, AU shipping, limited customization</td>
+        </tr>
+        <tr>
+          <td><strong>Foil Fusion</strong><br><span style="color:var(--text3);font-size:12px">US-based, new entrant</span></td>
+          <td><span class="price-tag price-yellow">$3,000–$5,000?</span><br><span style="font-size:11px;color:var(--text3)">pricing not public</span></td>
+          <td style="font-size:13px">US-based, modular, domestic shipping</td>
+          <td style="font-size:13px">Unproven, limited info, new company</td>
+        </tr>
+        <tr style="background:rgba(14, 165, 233, 0.04)">
+          <td><strong>🔧 DIY Build</strong><br><span style="color:var(--accent);font-size:12px">This guide</span></td>
+          <td><span class="price-tag price-green">$750–$1,500</span><br><span style="font-size:11px;color:var(--text3)">depending on battery</span></td>
+          <td style="font-size:13px">Fraction of cost, fully customizable, repairable, learn your system</td>
+          <td style="font-size:13px">Requires tools & skills, no warranty, build time</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-info">
+      <span class="callout-icon">💡</span>
+      <p><strong>The eFoil playbook:</strong> PacificMeister open-sourced the DIY eFoil in 2016, kickstarting the entire industry. Now we're doing the same for tow boogies. Open-source designs, community collaboration, everyone benefits.</p>
+    </div>
+  </section>
+
+  <!-- ═══ KEY LEARNINGS ═══ -->
+  <section class="section" id="tips">
+    <div class="section-label">Community Intelligence</div>
+    <h2>Critical Build Tips</h2>
+    <p class="section-intro">Lessons learned from 100+ community builds on FOIL.zone. Get these right and your first build will work.</p>
+
+    <div class="learning">
+      <span class="learning-icon">📍</span>
+      <div class="learning-text">
+        <strong>Motor at the VERY rear</strong>
+        <span>Front or center motor placement causes nosedive under power. Mount the motor as far back as possible — this is the #1 mistake new builders make.</span>
+      </div>
+    </div>
+
+    <div class="learning">
+      <span class="learning-icon">⬇️</span>
+      <div class="learning-text">
+        <strong>Tow point UNDER the hull</strong>
+        <span>Top-mounted tow points pull the board upward and cause instability. Route the tow rope attachment through or under the hull.</span>
+      </div>
+    </div>
+
+    <div class="learning">
+      <span class="learning-icon">📐</span>
+      <div class="learning-text">
+        <strong>5° downward motor pitch</strong>
+        <span>Angling the motor pod 5° down counteracts the tendency for the hull to lift under thrust. Critical for stable operation at towing speeds.</span>
+      </div>
+    </div>
+
+    <div class="learning">
+      <span class="learning-icon">🔩</span>
+      <div class="learning-text">
+        <strong>Aluminum tow bar is a game-changer</strong>
+        <span>A 25×25×2mm aluminum profile (1m) along the bottom centerline serves dual duty: structural stiffener + tow rope attachment. Makes bodyboard hulls rigid enough for real use.</span>
+      </div>
+    </div>
+
+    <div class="learning">
+      <span class="learning-icon">🖨️</span>
+      <div class="learning-text">
+        <strong>3D printed parts work great</strong>
+        <span>Motor mounts, pods, brackets — all print well in PETG or ASA. Community STL files on MakerWorld. No CNC needed for prototype builds.</span>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠️</span>
+      <p><strong>Safety first:</strong> Always use a kill switch / dead man's lanyard. Install a prop guard. Test in shallow water first. Never operate near swimmers. A tow boogie is an unmanned motorized vessel — treat it with respect.</p>
+    </div>
+  </section>
+
+  <!-- ═══ BUILD GUIDE ═══ -->
+  <section class="section" id="guide">
+    <div class="section-label">Step by Step</div>
+    <h2>Build Guide</h2>
+    <p class="section-intro">A 4-day build sequence from unboxing to water testing. Each phase can be done in an afternoon.</p>
+
+    <div class="build-timeline">
+
+      <div class="timeline-step">
+        <div class="timeline-dot">1</div>
+        <div class="timeline-day">Day 1–2: Indoors</div>
+        <h3>Electronics Assembly</h3>
+        <p>Configure your ESC, build the battery (if DIY), wire the motor, and bench test the complete system before it goes near water.</p>
+        <ul class="timeline-checklist">
+          <li>Conformal coat all PCBs — let dry 24 hours</li>
+          <li>Build battery pack (12S8P config) or prep pre-built battery</li>
+          <li>Wire ESC to motor (3-phase + hall sensor)</li>
+          <li>Configure VESC Tool: motor detection, current limits (60A batt / 120A motor), speed limit (~20 km/h)</li>
+          <li>Pair VX3 Pro remote (UART or PPM mode)</li>
+          <li>Bench test: motor spins, remote controls throttle, BMS reports via Bluetooth</li>
+        </ul>
+        <div class="callout callout-warn" style="margin-top:12px">
+          <span class="callout-icon">⚡</span>
+          <p><strong>CRITICAL:</strong> Turn OFF phase filter in VESC Tool for FSESC 75200 (firmware 5.3+). Missing this causes motor detection failure.</p>
+        </div>
+      </div>
+
+      <div class="timeline-step">
+        <div class="timeline-dot">2</div>
+        <div class="timeline-day">Day 2–3: Workshop</div>
+        <h3>Hull Preparation</h3>
+        <p>Install the tow bar, cut the motor mount hole, mount the electronics box, and seal everything watertight.</p>
+        <ul class="timeline-checklist">
+          <li>Mark motor position at extreme rear of hull</li>
+          <li>Cut motor mount hole using 3D printed template</li>
+          <li>Install aluminum tow bar along bottom centerline (M6 hardware + large washers)</li>
+          <li>Mount electronics box on top deck, centered</li>
+          <li>Install cable glands (PG7/PG9/PG11) for all wire penetrations</li>
+          <li>Seal ALL penetrations with marine sealant (3M 5200)</li>
+        </ul>
+      </div>
+
+      <div class="timeline-step">
+        <div class="timeline-dot">3</div>
+        <div class="timeline-day">Day 3: Workshop</div>
+        <h3>Motor Installation</h3>
+        <p>Mount the motor in its 3D-printed pod, install the propeller and guard, route wires through the hull.</p>
+        <ul class="timeline-checklist">
+          <li>3D print motor pod with 5° downward pitch angle</li>
+          <li>Install motor in pod, secure with SS316 bolts</li>
+          <li>Install prop + prop guard (safety critical!)</li>
+          <li>Route and secure motor wires through hull to electronics box</li>
+          <li>Attach tow rope to aluminum bar underneath hull</li>
+          <li>Add buoyancy foam in remaining void spaces</li>
+        </ul>
+      </div>
+
+      <div class="timeline-step">
+        <div class="timeline-dot">4</div>
+        <div class="timeline-day">Day 4+: On the Water 🌊</div>
+        <h3>Testing</h3>
+        <p>Progressive testing from float test to first tow. Video everything for your build thread!</p>
+        <ul class="timeline-checklist">
+          <li>Float test — verify buoyancy with all components, check for leaks</li>
+          <li>Shallow water motor test — run at low speed, check for vibration</li>
+          <li>Tow test without rider — verify straight tracking, no nosedive</li>
+          <li>First tow with rider — start at 50% throttle, 15m rope, open water</li>
+          <li>Performance logging: GPS speed, battery drain, handling notes</li>
+          <li>Video everything for FOIL.zone build thread!</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="callout callout-tip" style="margin-top:24px">
+      <span class="callout-icon">🎯</span>
+      <div>
+        <p><strong>Success criteria for V1:</strong></p>
+        <p>• Tow an 85kg rider to foil takeoff speed (~12–15 km/h)<br>
+           • Minimum 45 min runtime at towing duty<br>
+           • Reliable kill switch operation<br>
+           • Straight tracking without constant steering<br>
+           • No water ingress after 1hr session<br>
+           • Total weight under 15kg</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PARTS ═══ -->
+  <section class="section" id="parts">
+    <div class="section-label">Shopping List</div>
+    <h2>Parts & Components</h2>
+    <p class="section-intro">Everything you need, with links and prices. Use the <a href="index.html" style="color:var(--accent)">interactive configurator</a> to customize your build and get a printable shopping list.</p>
+
+    <div class="shop-category open">
+      <div class="shop-category-head" onclick="this.parentElement.classList.toggle('open')">
+        <h3>🔌 Propulsion</h3>
+        <span class="shop-category-price">~$680</span>
+      </div>
+      <div class="shop-category-body">
+        <div class="shop-item">
+          <span class="shop-item-name">Flipsky 65161 120KV 6000W Motor</span>
+          <span class="shop-item-source"><a href="https://flipsky.net/products/motor-65161-6000w-waterproof-underwater-thruster-electric-boat-thruster" target="_blank" rel="noopener">flipsky.net</a></span>
+          <span class="shop-item-price">$298</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">Flipsky FSESC 75200 Pro V2.0 (water cooling)</span>
+          <span class="shop-item-source">flipsky.net</span>
+          <span class="shop-item-price">$280–$320</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">65161 Aluminum Propeller (×2)</span>
+          <span class="shop-item-source">flipsky.net / AliExpress</span>
+          <span class="shop-item-price">$40–$60</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">Prop Guard (3D print or buy)</span>
+          <span class="shop-item-source">3D print / AliExpress</span>
+          <span class="shop-item-price">$15–$30</span>
+        </div>
+        <div class="callout callout-tip" style="margin:12px 0 0">
+          <span class="callout-icon">💰</span>
+          <p><strong>Save $50–$80:</strong> Flipsky sells motor + ESC + remote bundles. Look for "Propulsion With ESC & Remote VX3 Pro" on the motor page.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-category">
+      <div class="shop-category-head" onclick="this.parentElement.classList.toggle('open')">
+        <h3>📡 Remote</h3>
+        <span class="shop-category-price">~$110</span>
+      </div>
+      <div class="shop-category-body">
+        <div class="shop-item">
+          <span class="shop-item-name">Flipsky VX3 Pro Waterproof Remote</span>
+          <span class="shop-item-source"><a href="https://flipsky.net/products/waterproof-remote-vx3-pro-controller" target="_blank" rel="noopener">flipsky.net</a></span>
+          <span class="shop-item-price">$110</span>
+        </div>
+        <p style="font-size:13px;color:var(--text3);margin-top:8px">IP67, OLED display, GPS, cruise control, 2.4GHz. Compatible with FSESC 75200.</p>
+      </div>
+    </div>
+
+    <div class="shop-category">
+      <div class="shop-category-head" onclick="this.parentElement.classList.toggle('open')">
+        <h3>🔋 Battery</h3>
+        <span class="shop-category-price">$250–$700</span>
+      </div>
+      <div class="shop-category-body">
+        <h4 style="color:var(--accent);font-size:13px;margin-bottom:10px">Option A: DIY Pack (Recommended)</h4>
+        <div class="shop-item">
+          <span class="shop-item-name">96× Molicel P42A 21700 Cells (12S8P)</span>
+          <span class="shop-item-source">18650batterystore.com</span>
+          <span class="shop-item-price">$350–$450</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">12S 100A Smart BMS (Bluetooth)</span>
+          <span class="shop-item-source">AliExpress (Daly/JBD)</span>
+          <span class="shop-item-price">$45–$70</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">Nickel strip + fishpaper + shrink wrap</span>
+          <span class="shop-item-source">Amazon</span>
+          <span class="shop-item-price">$25–$35</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">50.4V 5A Charger</span>
+          <span class="shop-item-source">AliExpress / Amazon</span>
+          <span class="shop-item-price">$40–$55</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">XT90-S Connectors (anti-spark)</span>
+          <span class="shop-item-source">Amazon</span>
+          <span class="shop-item-price">$10–$15</span>
+        </div>
+
+        <h4 style="color:var(--green);font-size:13px;margin:16px 0 10px">Option B: Buy Pre-Built (Faster)</h4>
+        <div class="shop-item">
+          <span class="shop-item-name">Used 12S eFoil Battery Pack</span>
+          <span class="shop-item-source">FOIL.zone classifieds / Facebook</span>
+          <span class="shop-item-price">$200–$400</span>
+        </div>
+
+        <h4 style="color:var(--orange);font-size:13px;margin:16px 0 10px">Option C: Flipsky Battery (Turnkey)</h4>
+        <div class="shop-item">
+          <span class="shop-item-name">Flipsky Waterproof Battery Pack 12S</span>
+          <span class="shop-item-source">flipsky.net</span>
+          <span class="shop-item-price">$500–$700</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-category">
+      <div class="shop-category-head" onclick="this.parentElement.classList.toggle('open')">
+        <h3>🏗️ Hull & Structure</h3>
+        <span class="shop-category-price">~$120–$200</span>
+      </div>
+      <div class="shop-category-body">
+        <div class="shop-item">
+          <span class="shop-item-name">Bodyboard ~105×50cm (foam, rigid)</span>
+          <span class="shop-item-source">Amazon / surf shop</span>
+          <span class="shop-item-price">$30–$50</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">IP68 Electronics Box (380×310×115mm)</span>
+          <span class="shop-item-source"><a href="https://de.aliexpress.com/item/1005007922241712.html" target="_blank" rel="noopener">AliExpress</a></span>
+          <span class="shop-item-price">$25–$40</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">Aluminum Profile 25×25×2mm, 1m</span>
+          <span class="shop-item-source">Hardware store / Amazon</span>
+          <span class="shop-item-price">$10–$15</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">3D Printed Motor Mount + Pods</span>
+          <span class="shop-item-source">Self-print (PLA/PETG/ASA)</span>
+          <span class="shop-item-price">$15–$25</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">SS316 Hardware Kit (M6 assorted)</span>
+          <span class="shop-item-source">McMaster-Carr / Amazon</span>
+          <span class="shop-item-price">$20–$30</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">Marine Sealant (3M 5200)</span>
+          <span class="shop-item-source">Amazon / West Marine</span>
+          <span class="shop-item-price">$15</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">Dyneema Tow Rope 15m + Handle</span>
+          <span class="shop-item-source">Amazon / marine supply</span>
+          <span class="shop-item-price">$25–$40</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-category">
+      <div class="shop-category-head" onclick="this.parentElement.classList.toggle('open')">
+        <h3>🛡️ Waterproofing & Safety</h3>
+        <span class="shop-category-price">~$40–$60</span>
+      </div>
+      <div class="shop-category-body">
+        <div class="shop-item">
+          <span class="shop-item-name">Conformal Coating Spray (MG Chemicals)</span>
+          <span class="shop-item-source">Amazon</span>
+          <span class="shop-item-price">$15</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">Self-Amalgamating Tape</span>
+          <span class="shop-item-source">Amazon</span>
+          <span class="shop-item-price">$8</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">Cable Glands (PG7, PG9, PG11)</span>
+          <span class="shop-item-source">Amazon</span>
+          <span class="shop-item-price">$10</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">Foam Buoyancy Blocks</span>
+          <span class="shop-item-source">Amazon</span>
+          <span class="shop-item-price">$10–$15</span>
+        </div>
+        <div class="shop-item">
+          <span class="shop-item-name">Kill Switch Lanyard (Dead Man's Switch)</span>
+          <span class="shop-item-source">Amazon / AliExpress</span>
+          <span class="shop-item-price">$8–$12</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:24px">
+      <div class="card" style="text-align:center">
+        <h3 style="justify-content:center">💵 Cheapest Build</h3>
+        <div style="font-size:2.5em;font-weight:900;color:var(--green);margin:8px 0">$680–$850</div>
+        <p>Used battery, bodyboard hull, minimal extras</p>
+      </div>
+      <div class="card" style="text-align:center;border-color:var(--accent)">
+        <h3 style="justify-content:center">⭐ Recommended</h3>
+        <div style="font-size:2.5em;font-weight:900;color:var(--accent);margin:8px 0">$950–$1,200</div>
+        <p>DIY battery, all new components, safety gear</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:24px">
+      <a href="index.html" class="btn btn-primary" style="font-size:16px;padding:14px 32px">⚡ Use the Interactive Configurator →</a>
+      <p style="font-size:13px;color:var(--text3);margin-top:8px">Pick your exact components, see real-time pricing, get a printable shopping list</p>
+    </div>
+  </section>
+
+  <!-- ═══ UPGRADE PATH ═══ -->
+  <section class="section" id="upgrade">
+    <div class="section-label">V1 → V2</div>
+    <h2>Upgrade Path</h2>
+    <p class="section-intro">Start simple, learn on the water, then upgrade based on what you actually need.</p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr><th>Feature</th><th>V1 (Prototype)</th><th>V2 (Product)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Hull</strong></td>
+          <td>Bodyboard ($30–$50)</td>
+          <td>Custom inflatable drop-stitch</td>
+        </tr>
+        <tr>
+          <td><strong>Motor</strong></td>
+          <td>Single 65161</td>
+          <td>Dual 65161 (differential steering)</td>
+        </tr>
+        <tr>
+          <td><strong>Remote</strong></td>
+          <td>VX3 Pro (manual control)</td>
+          <td>Custom ESP32 + GPS follow/return</td>
+        </tr>
+        <tr>
+          <td><strong>Battery</strong></td>
+          <td>DIY 12S8P</td>
+          <td>Custom IP68 pack, quick-release</td>
+        </tr>
+        <tr>
+          <td><strong>Steering</strong></td>
+          <td>Weight shift + tow bar</td>
+          <td>Differential thrust (no rudder needed)</td>
+        </tr>
+        <tr>
+          <td><strong>Electronics</strong></td>
+          <td>Off-shelf box</td>
+          <td>Custom waterproof enclosure, potted connectors</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-info">
+      <span class="callout-icon">🔄</span>
+      <p><strong>The beauty of DIY:</strong> Motor, ESC, remote, and battery all carry over from V1 to V2. You're only upgrading hull and steering. ~50% of your V1 investment transfers directly.</p>
+    </div>
+  </section>
+
+  <!-- ═══ COMMUNITY ═══ -->
+  <section class="section" id="community">
+    <div class="section-label">Join the Community</div>
+    <h2>Build Threads & Resources</h2>
+    <p class="section-intro">Join the world's most active tow boogie community on FOIL.zone — share your build, get help, download 3D files.</p>
+
+    <a href="https://foil.zone/t/my-tow-boogie-build-2025/23796" target="_blank" rel="noopener" class="community-link">
+      <span class="community-link-icon">🛠️</span>
+      <div class="community-link-info">
+        <div class="community-link-title">Chris's 2025 Dual-Motor Build</div>
+        <div class="community-link-desc">Fully documented build with 3D-printed parts, dual motor differential steering. Files shared openly.</div>
+      </div>
+      <span class="community-link-arrow">→</span>
+    </a>
+
+    <a href="https://makerworld.com/en/collections/6660539-e-tow-2025" target="_blank" rel="noopener" class="community-link">
+      <span class="community-link-icon">🖨️</span>
+      <div class="community-link-info">
+        <div class="community-link-title">3D Print Files on MakerWorld</div>
+        <div class="community-link-desc">Download motor mounts, pods, brackets, and prop guards. Ready to print in PETG or ASA.</div>
+      </div>
+      <span class="community-link-arrow">→</span>
+    </a>
+
+    <a href="https://foil.zone/t/jdubs-dual-motor-tow-boogie/19048" target="_blank" rel="noopener" class="community-link">
+      <span class="community-link-icon">🔧</span>
+      <div class="community-link-info">
+        <div class="community-link-title">JDub's Dual Motor Tow Boogie</div>
+        <div class="community-link-desc">Built from salvaged eFoil parts — proof you can build on a budget.</div>
+      </div>
+      <span class="community-link-arrow">→</span>
+    </a>
+
+    <a href="https://foil.zone/t/tow-boogie-general-design/20560" target="_blank" rel="noopener" class="community-link">
+      <span class="community-link-icon">💬</span>
+      <div class="community-link-info">
+        <div class="community-link-title">Tow Boogie General Design Thread</div>
+        <div class="community-link-desc">100+ posts discussing hull shapes, steering approaches, motor placement, and more.</div>
+      </div>
+      <span class="community-link-arrow">→</span>
+    </a>
+
+    <a href="https://e-surfer.com/en/blog/diy-etow-build-your-own-tow-boogie/" target="_blank" rel="noopener" class="community-link">
+      <span class="community-link-icon">📰</span>
+      <div class="community-link-info">
+        <div class="community-link-title">e-surfer.com DIY eTow Guide</div>
+        <div class="community-link-desc">Third-party guide referencing PacificMeister — external validation of the DIY approach.</div>
+      </div>
+      <span class="community-link-arrow">→</span>
+    </a>
+
+    <a href="https://foil.zone" target="_blank" rel="noopener" class="community-link" style="border-color:var(--accent)">
+      <span class="community-link-icon">🌊</span>
+      <div class="community-link-info">
+        <div class="community-link-title">FOIL.zone — The Community</div>
+        <div class="community-link-desc">The world's #1 DIY eFoil forum. Where tow boogie builders share, learn, and collaborate.</div>
+      </div>
+      <span class="community-link-arrow">→</span>
+    </a>
+
+    <div class="callout callout-info" style="margin-top:20px">
+      <span class="callout-icon">🤝</span>
+      <p><strong>Differential steering revolution:</strong> Check out the <a href="https://openfoil.com" target="_blank" rel="noopener" style="color:var(--accent2)">BRemote by Ludwig</a> — a third-party remote enabling differential steering for dual-motor builds. Eliminates the need for mechanical rudders entirely.</p>
+    </div>
+  </section>
+
+  <!-- ═══ EMERGING USE CASES ═══ -->
+  <section class="section" id="uses">
+    <div class="section-label">Beyond Riding</div>
+    <h2>Who's Using Tow Boogies?</h2>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>🏫 Foil Training Schools</h3>
+        <p>Schools like <strong>wingfoil-fehmarn.de</strong> in Germany are using tow boogies for wingfoil instruction in shallow water. B2B opportunity for reliable, easy-to-operate devices.</p>
+      </div>
+      <div class="card">
+        <h3>🏄 Prone Foil Surfers</h3>
+        <p>Get towed to the lineup, release, catch the wave. The purest form of foil surfing — no motor on your board, no paddle exhaustion.</p>
+      </div>
+      <div class="card">
+        <h3>🌬️ Downwind Runners</h3>
+        <p>Zero Tow V3 riders report 25km downwind runs on prone boards. Use the tow boogie to get up on foil, then ride bumps indefinitely.</p>
+      </div>
+      <div class="card">
+        <h3>👥 Group Sessions</h3>
+        <p>One device, multiple riders. Perfect for beach communities, clubs, and friend groups. Take turns getting towed — everyone rides.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ═══ CTA FOOTER ═══ -->
+<section style="padding:60px 24px;text-align:center;background:linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%)">
+  <h2 style="font-size:2em;font-weight:900;margin-bottom:12px">Ready to Build?</h2>
+  <p style="color:var(--text2);font-size:17px;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto">Use the interactive configurator to pick your components, see real-time pricing, and get a printable shopping list.</p>
+  <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+    <a href="index.html" class="btn btn-primary" style="font-size:16px;padding:14px 32px">⚡ Open Build Configurator</a>
+    <a href="https://foil.zone" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:16px;padding:14px 32px">🌊 Join FOIL.zone</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Built with 🌊 by <a href="https://foil.zone">PacificMeister</a> — open-source eFoil pioneer since 2016</p>
+  <p style="margin-top:8px">Guide data sourced from the <a href="https://foil.zone">FOIL.zone</a> community. Prices as of March 2026.</p>
+  <p style="margin-top:8px;font-size:12px">
+    <a href="index.html">Configurator</a> · <a href="https://foil.zone">Forum</a> · <a href="https://github.com/pacificmeister/towboogie-build">GitHub</a>
+  </p>
+</footer>
+
+</body>
+</html>
