@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tow Boogie Performance Calculator — PacificMeister</title>
+  <meta name="description" content="Calculate your DIY tow boogie's speed, range, runtime, and cost savings. Physics-based estimates for electric tow surfing builds. Free tool by PacificMeister.">
+  <meta name="keywords" content="tow boogie calculator, electric tow surfing range, DIY efoil performance, tow boogie speed, battery runtime calculator, PacificMeister">
+  <meta name="author" content="PacificMeister">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tow Boogie Performance Calculator — PacificMeister">
+  <meta property="og:description" content="How fast? How far? How long? Calculate your DIY tow boogie performance with real physics. Free tool from the FOIL.zone community.">
+  <meta property="og:url" content="https://pacificmeister.github.io/towboogie-build/calculator.html">
+  <meta property="og:site_name" content="PacificMeister">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tow Boogie Performance Calculator">
+  <meta name="twitter:description" content="Physics-based speed, range & runtime estimates for DIY electric tow boggies.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://pacificmeister.github.io/towboogie-build/calculator.html">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Tow Boogie Performance Calculator",
+    "description": "Physics-based performance calculator for DIY electric tow boggies. Estimates speed, range, runtime, and cost-per-session.",
+    "url": "https://pacificmeister.github.io/towboogie-build/calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "author": {
+      "@type": "Person",
+      "name": "PacificMeister",
+      "url": "https://foil.zone"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ─── Calculator-specific styles ─── */
+    .calc-page { padding: 48px 0 64px; }
+    .calc-page h2 {
+      font-size: 32px; font-weight: 800; letter-spacing: -0.03em;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--accent), #a78bfa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .calc-page .lead { font-size: 16px; color: var(--text-dim); margin-bottom: 40px; max-width: 640px; }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .calc-grid { grid-template-columns: 1fr; } }
+
+    /* Input Panel */
+    .input-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .input-panel h3 {
+      font-size: 16px; font-weight: 700; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .input-group { margin-bottom: 24px; }
+    .input-group:last-child { margin-bottom: 0; }
+    .input-label {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 8px;
+    }
+    .input-label span:first-child {
+      font-size: 13px; font-weight: 600; color: var(--text);
+    }
+    .input-label .unit { font-size: 12px; color: var(--text-muted); }
+
+    .slider-wrap { position: relative; }
+    .slider-wrap input[type="range"] {
+      -webkit-appearance: none; width: 100%; height: 6px;
+      background: var(--surface-3); border-radius: 3px; outline: none;
+      cursor: pointer;
+    }
+    .slider-wrap input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 20px; height: 20px;
+      background: var(--accent); border-radius: 50%; cursor: pointer;
+      box-shadow: 0 0 8px rgba(56,189,248,0.4);
+      transition: transform 0.15s;
+    }
+    .slider-wrap input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    .slider-value {
+      display: inline-block; min-width: 60px; text-align: right;
+      font-size: 18px; font-weight: 800; color: var(--accent);
+      font-family: 'Inter', sans-serif;
+    }
+    .slider-ticks {
+      display: flex; justify-content: space-between;
+      font-size: 10px; color: var(--text-muted); margin-top: 4px; padding: 0 2px;
+    }
+
+    /* Preset buttons */
+    .presets { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .preset-btn {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 16px; font-size: 12px;
+      font-weight: 600; color: var(--text-dim); cursor: pointer;
+      transition: all 0.15s; font-family: inherit;
+    }
+    .preset-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .preset-btn.active {
+      background: var(--accent-glow); border-color: var(--accent); color: var(--accent);
+    }
+
+    /* Select dropdown */
+    .calc-select {
+      width: 100%; padding: 10px 14px; font-size: 14px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--text);
+      font-family: inherit; cursor: pointer; outline: none;
+      transition: border-color 0.15s;
+    }
+    .calc-select:focus { border-color: var(--accent); }
+
+    /* Results Panel */
+    .results-panel {
+      position: sticky; top: 80px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .result-card h3 {
+      font-size: 14px; font-weight: 700; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 20px;
+    }
+
+    .result-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+
+    .result-tile {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .result-tile::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--tile-accent, var(--accent));
+    }
+    .result-tile .icon { font-size: 24px; margin-bottom: 6px; }
+    .result-tile .value {
+      font-size: 28px; font-weight: 800; letter-spacing: -0.02em;
+      line-height: 1.1; margin-bottom: 4px;
+    }
+    .result-tile .label {
+      font-size: 11px; color: var(--text-muted); text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .result-tile .detail {
+      font-size: 11px; color: var(--text-dim); margin-top: 4px;
+    }
+    .tile-speed { --tile-accent: var(--accent); }
+    .tile-speed .value { color: var(--accent); }
+    .tile-range { --tile-accent: var(--green); }
+    .tile-range .value { color: var(--green); }
+    .tile-runtime { --tile-accent: #a78bfa; }
+    .tile-runtime .value { color: #a78bfa; }
+    .tile-energy { --tile-accent: var(--yellow); }
+    .tile-energy .value { color: var(--yellow); }
+
+    /* Efficiency bar chart */
+    .eff-chart { margin-top: 16px; }
+    .eff-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+    }
+    .eff-label { font-size: 12px; color: var(--text-dim); min-width: 80px; text-align: right; }
+    .eff-bar-bg {
+      flex: 1; height: 20px; background: var(--surface-3);
+      border-radius: 4px; overflow: hidden; position: relative;
+    }
+    .eff-bar {
+      height: 100%; border-radius: 4px; transition: width 0.6s ease;
+      display: flex; align-items: center; justify-content: flex-end; padding-right: 8px;
+      font-size: 10px; font-weight: 700; color: white; min-width: 30px;
+    }
+
+    /* Cost analysis */
+    .cost-analysis { margin-top: 0; }
+    .cost-row-calc {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .cost-row-calc:last-child { border-bottom: none; }
+    .cost-row-calc .cr-label { color: var(--text-dim); }
+    .cost-row-calc .cr-value { font-weight: 700; }
+    .cost-row-calc.highlight {
+      font-size: 15px; padding: 14px 0;
+    }
+    .cost-row-calc.highlight .cr-value { color: var(--green); font-size: 18px; }
+
+    /* Breakeven chart */
+    .breakeven-visual {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 20px; margin-top: 16px;
+    }
+    .breakeven-visual h4 {
+      font-size: 13px; font-weight: 700; margin-bottom: 12px;
+      color: var(--text-dim);
+    }
+    .be-bar-group { margin-bottom: 12px; }
+    .be-label-row {
+      display: flex; justify-content: space-between; font-size: 11px;
+      margin-bottom: 4px;
+    }
+    .be-label-row .name { color: var(--text-dim); font-weight: 600; }
+    .be-label-row .sessions { color: var(--text-muted); }
+    .be-bar-outer {
+      height: 24px; background: var(--surface-3); border-radius: 4px;
+      overflow: hidden; position: relative;
+    }
+    .be-bar-inner {
+      height: 100%; border-radius: 4px; transition: width 0.6s ease;
+      display: flex; align-items: center; padding-left: 10px;
+      font-size: 11px; font-weight: 700; color: white;
+    }
+
+    /* Conditions note */
+    .conditions-note {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 16px; margin-top: 20px;
+      font-size: 12px; color: var(--text-dim); line-height: 1.7;
+    }
+    .conditions-note strong { color: var(--text); }
+    .conditions-note ul { margin-top: 8px; padding-left: 20px; }
+
+    /* Power curve canvas */
+    #power-curve-canvas {
+      width: 100%; height: 200px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); margin-top: 16px;
+    }
+
+    /* Scenario comparison */
+    .scenario-table {
+      width: 100%; border-collapse: collapse; margin-top: 12px;
+    }
+    .scenario-table th {
+      text-align: left; font-size: 11px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 8px 12px; border-bottom: 1px solid var(--border);
+      background: var(--surface-3);
+    }
+    .scenario-table th:first-child { border-radius: 6px 0 0 0; }
+    .scenario-table th:last-child { border-radius: 0 6px 0 0; }
+    .scenario-table td {
+      padding: 10px 12px; font-size: 13px;
+      border-bottom: 1px solid var(--border);
+    }
+    .scenario-table tr:last-child td { border-bottom: none; }
+    .scenario-table .highlight-cell { color: var(--green); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="logo">
+          <span class="logo-icon">⚡</span>
+          <div>
+            <h1>Tow Boogie Builder</h1>
+            <p class="subtitle">by PacificMeister &middot; Open Source</p>
+          </div>
+        </div>
+        <nav style="display:flex;align-items:center;gap:12px">
+          <a href="index.html" style="color:var(--text-dim);text-decoration:none;font-size:14px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:8px;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='';this.style.color='var(--text-dim)'">🔧 Configurator</a>
+          <a href="guide.html" style="color:var(--text-dim);text-decoration:none;font-size:14px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:8px;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='';this.style.color='var(--text-dim)'">📖 Build Guide</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container calc-page">
+    <h2>Performance Calculator</h2>
+    <p class="lead">How fast? How far? How long? Dial in your setup and riding style to get physics-based performance estimates for your tow boogie build.</p>
+
+    <div class="calc-grid">
+      <!-- Left: Inputs -->
+      <div>
+        <div class="input-panel">
+          <h3>⚙️ Your Setup</h3>
+
+          <!-- Quick Presets -->
+          <div class="input-group">
+            <div class="input-label"><span>Quick Presets</span></div>
+            <div class="presets">
+              <button class="preset-btn" onclick="applyPreset('budget')">💰 Budget</button>
+              <button class="preset-btn active" onclick="applyPreset('standard')">⚡ Standard</button>
+              <button class="preset-btn" onclick="applyPreset('premium')">🏆 Premium</button>
+              <button class="preset-btn" onclick="applyPreset('zerotow')">🦈 Zero Tow V3</button>
+            </div>
+          </div>
+
+          <!-- Rider Weight -->
+          <div class="input-group">
+            <div class="input-label">
+              <span>Rider Weight</span>
+              <span class="slider-value" id="val-rider">80 kg</span>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" id="slider-rider" min="50" max="130" value="80" step="5" oninput="recalc()">
+              <div class="slider-ticks"><span>50 kg</span><span>90 kg</span><span>130 kg</span></div>
+            </div>
+          </div>
+
+          <!-- Battery Capacity -->
+          <div class="input-group">
+            <div class="input-label">
+              <span>Battery Capacity</span>
+              <span class="slider-value" id="val-battery">2.0 kWh</span>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" id="slider-battery" min="0.5" max="4.0" value="2.0" step="0.1" oninput="recalc()">
+              <div class="slider-ticks"><span>0.5 kWh</span><span>2.0 kWh</span><span>4.0 kWh</span></div>
+            </div>
+          </div>
+
+          <!-- Motor Power -->
+          <div class="input-group">
+            <div class="input-label">
+              <span>Motor Power</span>
+              <span class="slider-value" id="val-motor">6 kW</span>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" id="slider-motor" min="3" max="10" value="6" step="0.5" oninput="recalc()">
+              <div class="slider-ticks"><span>3 kW</span><span>6 kW</span><span>10 kW</span></div>
+            </div>
+          </div>
+
+          <!-- Tow Duty -->
+          <div class="input-group">
+            <div class="input-label">
+              <span>Average Throttle</span>
+              <span class="slider-value" id="val-throttle">60%</span>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" id="slider-throttle" min="20" max="100" value="60" step="5" oninput="recalc()">
+              <div class="slider-ticks"><span>20% Cruise</span><span>60%</span><span>100% Full</span></div>
+            </div>
+          </div>
+
+          <!-- Build Cost -->
+          <div class="input-group">
+            <div class="input-label">
+              <span>Your Build Cost</span>
+              <span class="slider-value" id="val-cost">$1,100</span>
+            </div>
+            <div class="slider-wrap">
+              <input type="range" id="slider-cost" min="500" max="3000" value="1100" step="50" oninput="recalc()">
+              <div class="slider-ticks"><span>$500</span><span>$1,500</span><span>$3,000</span></div>
+            </div>
+          </div>
+
+          <!-- Riding Style -->
+          <div class="input-group">
+            <div class="input-label"><span>Riding Style</span></div>
+            <select class="calc-select" id="sel-style" onchange="recalc()">
+              <option value="tow-prone">Tow → Prone Foil (short bursts, lots of catch & release)</option>
+              <option value="tow-sup" selected>Tow → SUP Foil (moderate towing, glide between bumps)</option>
+              <option value="tow-wing">Tow → Wing Foil (tow up, wing takes over)</option>
+              <option value="continuous">Continuous Towing (eFoil-like, constant throttle)</option>
+              <option value="training">Training School (back-to-back students, heavy duty)</option>
+            </select>
+          </div>
+
+          <!-- Water Conditions -->
+          <div class="input-group">
+            <div class="input-label"><span>Water Conditions</span></div>
+            <select class="calc-select" id="sel-conditions" onchange="recalc()">
+              <option value="flat">Flat Water (lake, calm bay)</option>
+              <option value="light-chop" selected>Light Chop (coastal, mild wind)</option>
+              <option value="rough">Rough / Open Ocean</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- How It's Calculated -->
+        <div class="conditions-note" style="margin-top:20px">
+          <strong>📐 How We Calculate</strong>
+          <ul>
+            <li><strong>Speed:</strong> Based on motor power, prop efficiency (~55-65%), hull drag, and rider weight using simplified propulsion physics</li>
+            <li><strong>Range:</strong> Runtime × average speed, accounting for duty cycle (tow boggies don't run continuously — you tow, release, reposition)</li>
+            <li><strong>Runtime:</strong> Battery capacity ÷ average power draw, adjusted for riding style duty cycle and ESC/motor efficiency (~85%)</li>
+            <li><strong>Cost/session:</strong> Electricity cost (~$0.15/kWh) + estimated wear (~$0.50/session for prop, bearings, rope)</li>
+          </ul>
+          <p style="margin-top:8px;">⚠️ Real-world results vary based on prop pitch, current, wind, rider skill, and battery health. These are educated estimates based on 100+ community builds.</p>
+        </div>
+      </div>
+
+      <!-- Right: Results -->
+      <div class="results-panel">
+        <!-- Primary Results -->
+        <div class="result-card">
+          <h3>⚡ Performance Estimates</h3>
+          <div class="result-grid">
+            <div class="result-tile tile-speed">
+              <div class="icon">🏎️</div>
+              <div class="value" id="res-speed">22</div>
+              <div class="label">km/h top speed</div>
+              <div class="detail" id="res-speed-mph">13.7 mph</div>
+            </div>
+            <div class="result-tile tile-range">
+              <div class="icon">📏</div>
+              <div class="value" id="res-range">18</div>
+              <div class="label">km total range</div>
+              <div class="detail" id="res-range-mi">11.2 mi</div>
+            </div>
+            <div class="result-tile tile-runtime">
+              <div class="icon">⏱️</div>
+              <div class="value" id="res-runtime">1:45</div>
+              <div class="label">session time</div>
+              <div class="detail" id="res-runtime-detail">motor-on time</div>
+            </div>
+            <div class="result-tile tile-energy">
+              <div class="icon">🔋</div>
+              <div class="value" id="res-energy">1.2</div>
+              <div class="label">kWh consumed</div>
+              <div class="detail" id="res-energy-detail">of 2.0 kWh battery</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Power Breakdown -->
+        <div class="result-card">
+          <h3>📊 Power Breakdown</h3>
+          <div class="eff-chart" id="power-breakdown">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+
+        <!-- Riding Scenarios -->
+        <div class="result-card">
+          <h3>🏄 Scenario Comparison</h3>
+          <table class="scenario-table" id="scenario-table">
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>Duty</th>
+                <th>Runtime</th>
+                <th>Tows</th>
+              </tr>
+            </thead>
+            <tbody id="scenario-body">
+              <!-- Filled by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Cost Analysis -->
+        <div class="result-card">
+          <h3>💰 Cost Analysis</h3>
+          <div class="cost-analysis">
+            <div class="cost-row-calc">
+              <span class="cr-label">Electricity per session</span>
+              <span class="cr-value" id="cost-electricity">$0.30</span>
+            </div>
+            <div class="cost-row-calc">
+              <span class="cr-label">Wear & consumables</span>
+              <span class="cr-value" id="cost-wear">$0.50</span>
+            </div>
+            <div class="cost-row-calc">
+              <span class="cr-label">Total cost per session</span>
+              <span class="cr-value" id="cost-per-session">$0.80</span>
+            </div>
+            <div class="cost-row-calc">
+              <span class="cr-label">Sessions per year (est.)</span>
+              <span class="cr-value" id="cost-sessions-yr">100</span>
+            </div>
+            <div class="cost-row-calc highlight">
+              <span class="cr-label">Annual operating cost</span>
+              <span class="cr-value" id="cost-annual">$80</span>
+            </div>
+          </div>
+
+          <!-- Breakeven vs Commercial -->
+          <div class="breakeven-visual">
+            <h4>Breakeven vs Commercial Options</h4>
+            <div id="breakeven-bars">
+              <!-- Filled by JS -->
+            </div>
+            <p style="font-size:11px;color:var(--text-muted);margin-top:12px;">
+              * Based on <span id="be-session-freq">2 sessions/week</span>. Your DIY build pays for itself fast.
+            </p>
+          </div>
+        </div>
+
+        <!-- Share/Print -->
+        <div style="display:flex;gap:12px;margin-top:8px;">
+          <button onclick="shareCalc()" style="flex:1;padding:12px;background:var(--accent-glow);border:1px solid var(--accent);border-radius:var(--radius-sm);color:var(--accent);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🔗 Share Results</button>
+          <button onclick="window.print()" style="flex:1;padding:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-dim);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🖨️ Print</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>
+        Built with ❤️ by <a href="https://foil.zone" target="_blank">PacificMeister</a> &middot;
+        Data from 100+ DIY builds on <a href="https://foil.zone" target="_blank">FOIL.zone</a> &middot;
+        <a href="https://github.com/pacificmeister/towboogie-build" target="_blank">Open Source</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Physics Model ───────────────────────────────────────────────
+    // Simplified tow boogie performance model based on community data.
+    // Sources: FOIL.zone build threads, Zero Tow specs, e-surfer.com data.
+
+    const PRESETS = {
+      budget: { battery: 1.5, motor: 6, throttle: 55, cost: 800 },
+      standard: { battery: 2.0, motor: 6, throttle: 60, cost: 1100 },
+      premium: { battery: 2.5, motor: 6, throttle: 65, cost: 1800 },
+      zerotow: { battery: 2.16, motor: 7, throttle: 60, cost: 7750 },
+    };
+
+    // Riding style duty cycles and characteristics
+    const STYLES = {
+      'tow-prone':  { duty: 0.30, towDurationMin: 0.3, restMin: 1.5, label: 'Tow → Prone Foil', towsPerHour: 20 },
+      'tow-sup':    { duty: 0.40, towDurationMin: 0.5, restMin: 1.0, label: 'Tow → SUP Foil', towsPerHour: 15 },
+      'tow-wing':   { duty: 0.25, towDurationMin: 0.4, restMin: 2.0, label: 'Tow → Wing Foil', towsPerHour: 12 },
+      'continuous':  { duty: 0.85, towDurationMin: 5.0, restMin: 1.0, label: 'Continuous Tow', towsPerHour: 6 },
+      'training':    { duty: 0.70, towDurationMin: 1.0, restMin: 0.5, label: 'Training School', towsPerHour: 25 },
+    };
+
+    const CONDITIONS = {
+      'flat': { dragMult: 0.85, effMult: 1.05, label: 'Flat Water' },
+      'light-chop': { dragMult: 1.0, effMult: 1.0, label: 'Light Chop' },
+      'rough': { dragMult: 1.25, effMult: 0.90, label: 'Rough' },
+    };
+
+    function getInputs() {
+      return {
+        riderKg: parseFloat(document.getElementById('slider-rider').value),
+        batteryKwh: parseFloat(document.getElementById('slider-battery').value),
+        motorKw: parseFloat(document.getElementById('slider-motor').value),
+        throttlePct: parseFloat(document.getElementById('slider-throttle').value) / 100,
+        buildCost: parseFloat(document.getElementById('slider-cost').value),
+        style: document.getElementById('sel-style').value,
+        conditions: document.getElementById('sel-conditions').value,
+      };
+    }
+
+    function calculate(inputs) {
+      const style = STYLES[inputs.style];
+      const cond = CONDITIONS[inputs.conditions];
+
+      // Hull + boogie weight (approx)
+      const boogieKg = 12; // average assembled tow boogie weight
+      const totalMassKg = inputs.riderKg + boogieKg;
+
+      // Motor efficiency chain: battery → ESC (~95%) → motor (~75-85%) → prop (~55-65%)
+      const escEff = 0.95;
+      const motorEff = 0.80;
+      const propEff = 0.58;
+      const totalEff = escEff * motorEff * propEff * cond.effMult; // ~0.44
+
+      // Effective thrust power at prop
+      const avgPowerKw = inputs.motorKw * inputs.throttlePct;
+      const thrustPowerKw = avgPowerKw * totalEff;
+
+      // Speed estimation using simplified drag model
+      // P = 0.5 * rho * Cd * A * v^3 (water drag dominant)
+      // Solving for v: v = (2P / (rho * Cd * A))^(1/3)
+      const rho = 1025; // seawater kg/m^3
+      const Cd = 0.35 * cond.dragMult; // drag coefficient for flat hull shape
+      const A = 0.04 + (totalMassKg - 80) * 0.0002; // submerged area increases with weight
+      const thrustPowerW = thrustPowerKw * 1000;
+      const speedMs = Math.pow((2 * thrustPowerW) / (rho * Cd * A), 1/3);
+      const speedKmh = speedMs * 3.6;
+      const topSpeedKmh = Math.min(speedKmh, 35); // physical cap
+
+      // Runtime: battery capacity / average power draw, adjusted for duty cycle
+      const avgDrawKw = avgPowerKw * style.duty;
+      const usableBattery = inputs.batteryKwh * 0.85; // don't discharge below 15%
+      const motorOnTimeH = usableBattery / avgPowerKw; // hours of actual motor-on time
+      const sessionTimeH = motorOnTimeH / style.duty; // total session including rest
+      const sessionTimeMin = sessionTimeH * 60;
+
+      // Range: motor-on distance
+      const cruiseSpeedKmh = topSpeedKmh * 0.75; // cruising lower than top
+      const motorOnRangeKm = motorOnTimeH * cruiseSpeedKmh;
+
+      // Energy consumed
+      const energyConsumed = avgPowerKw * motorOnTimeH;
+
+      // Tows per session
+      const totalTows = Math.round(style.towsPerHour * sessionTimeH);
+
+      // Power breakdown
+      const heatLossKw = avgPowerKw * (1 - totalEff);
+      const propLossKw = avgPowerKw * escEff * motorEff * (1 - propEff * cond.effMult);
+      const motorLossKw = avgPowerKw * escEff * (1 - motorEff);
+      const escLossKw = avgPowerKw * (1 - escEff);
+
+      // Cost analysis
+      const electricityCost = energyConsumed * 0.15; // $/kWh
+      const wearCost = 0.50; // estimated per session
+      const costPerSession = electricityCost + wearCost;
+      const sessionsPerYear = 100; // estimate for active rider
+      const annualCost = costPerSession * sessionsPerYear;
+
+      // Breakeven calculations
+      const zerotowCost = 7750;
+      const foilFusionCost = 4500;
+      const sessionsPerWeek = 2;
+      const breakevenZerotow = Math.ceil((zerotowCost - inputs.buildCost) / costPerSession);
+      const breakevenFoilFusion = Math.ceil((foilFusionCost - inputs.buildCost) / costPerSession);
+      const weeksToBreakevenZT = Math.ceil(breakevenZerotow / sessionsPerWeek);
+
+      return {
+        topSpeedKmh, motorOnRangeKm, sessionTimeMin, motorOnTimeH,
+        energyConsumed, usableBattery, totalTows,
+        thrustPowerKw, heatLossKw, propLossKw, motorLossKw, escLossKw, avgPowerKw,
+        electricityCost, wearCost, costPerSession, sessionsPerYear, annualCost,
+        breakevenZerotow, breakevenFoilFusion, weeksToBreakevenZT, sessionsPerWeek,
+        style, cruiseSpeedKmh,
+      };
+    }
+
+    function recalc() {
+      const inputs = getInputs();
+      const r = calculate(inputs);
+
+      // Update slider display values
+      document.getElementById('val-rider').textContent = inputs.riderKg + ' kg';
+      document.getElementById('val-battery').textContent = inputs.batteryKwh.toFixed(1) + ' kWh';
+      document.getElementById('val-motor').textContent = inputs.motorKw + ' kW';
+      document.getElementById('val-throttle').textContent = Math.round(inputs.throttlePct * 100) + '%';
+      document.getElementById('val-cost').textContent = '$' + inputs.buildCost.toLocaleString();
+
+      // Primary results
+      document.getElementById('res-speed').textContent = Math.round(r.topSpeedKmh);
+      document.getElementById('res-speed-mph').textContent = (r.topSpeedKmh * 0.621371).toFixed(1) + ' mph';
+      document.getElementById('res-range').textContent = Math.round(r.motorOnRangeKm);
+      document.getElementById('res-range-mi').textContent = (r.motorOnRangeKm * 0.621371).toFixed(1) + ' mi';
+
+      const hrs = Math.floor(r.sessionTimeMin / 60);
+      const mins = Math.round(r.sessionTimeMin % 60);
+      document.getElementById('res-runtime').textContent = hrs + ':' + String(mins).padStart(2, '0');
+      const moH = Math.floor(r.motorOnTimeH);
+      const moM = Math.round((r.motorOnTimeH - moH) * 60);
+      document.getElementById('res-runtime-detail').textContent = moH + 'h ' + moM + 'm motor-on';
+
+      document.getElementById('res-energy').textContent = r.energyConsumed.toFixed(1);
+      document.getElementById('res-energy-detail').textContent = 'of ' + inputs.batteryKwh.toFixed(1) + ' kWh battery';
+
+      // Power breakdown bars
+      const breakdownEl = document.getElementById('power-breakdown');
+      const totalP = r.avgPowerKw;
+      const bars = [
+        { label: 'Thrust', value: r.thrustPowerKw, pct: (r.thrustPowerKw / totalP * 100), color: 'var(--green)' },
+        { label: 'Prop Loss', value: r.propLossKw, pct: (r.propLossKw / totalP * 100), color: 'var(--yellow)' },
+        { label: 'Motor Heat', value: r.motorLossKw, pct: (r.motorLossKw / totalP * 100), color: 'var(--orange)' },
+        { label: 'ESC Heat', value: r.escLossKw, pct: (r.escLossKw / totalP * 100), color: 'var(--red)' },
+      ];
+      breakdownEl.innerHTML = bars.map(b => `
+        <div class="eff-row">
+          <span class="eff-label">${b.label}</span>
+          <div class="eff-bar-bg">
+            <div class="eff-bar" style="width:${b.pct.toFixed(0)}%;background:${b.color}">
+              ${b.value.toFixed(1)} kW
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Scenario comparison table
+      const scenarioBody = document.getElementById('scenario-body');
+      const scenarios = Object.entries(STYLES).map(([key, s]) => {
+        const scenInputs = { ...inputs, style: key };
+        const scenR = calculate(scenInputs);
+        return {
+          label: s.label,
+          duty: Math.round(s.duty * 100) + '%',
+          runtime: Math.floor(scenR.sessionTimeMin / 60) + 'h ' + Math.round(scenR.sessionTimeMin % 60) + 'm',
+          tows: scenR.totalTows,
+          isActive: key === inputs.style,
+        };
+      });
+      scenarioBody.innerHTML = scenarios.map(s => `
+        <tr style="${s.isActive ? 'background:var(--accent-glow)' : ''}">
+          <td style="${s.isActive ? 'font-weight:700;color:var(--accent)' : ''}">${s.label}</td>
+          <td>${s.duty}</td>
+          <td>${s.runtime}</td>
+          <td>${s.tows}</td>
+        </tr>
+      `).join('');
+
+      // Cost analysis
+      document.getElementById('cost-electricity').textContent = '$' + r.electricityCost.toFixed(2);
+      document.getElementById('cost-wear').textContent = '$' + r.wearCost.toFixed(2);
+      document.getElementById('cost-per-session').textContent = '$' + r.costPerSession.toFixed(2);
+      document.getElementById('cost-sessions-yr').textContent = r.sessionsPerYear;
+      document.getElementById('cost-annual').textContent = '$' + Math.round(r.annualCost);
+
+      // Breakeven bars
+      const maxSessions = r.breakevenZerotow * 1.2;
+      const beEl = document.getElementById('breakeven-bars');
+      const beData = [
+        { name: 'Your DIY Build', sessions: 0, weeks: 0, color: 'var(--green)', cost: inputs.buildCost },
+        { name: 'Foil Fusion (~$4,500)', sessions: r.breakevenFoilFusion, weeks: Math.ceil(r.breakevenFoilFusion / r.sessionsPerWeek), color: 'var(--yellow)', cost: 4500 },
+        { name: 'Zero Tow V3 ($7,750)', sessions: r.breakevenZerotow, weeks: Math.ceil(r.breakevenZerotow / r.sessionsPerWeek), color: 'var(--red)', cost: 7750 },
+      ];
+      beEl.innerHTML = beData.map(b => {
+        const barW = b.sessions === 0 ? 5 : Math.max(10, (b.sessions / maxSessions * 100));
+        const label = b.sessions === 0
+          ? '$' + b.cost.toLocaleString() + ' (you own it!)'
+          : b.sessions + ' sessions (' + b.weeks + ' weeks)';
+        return `
+          <div class="be-bar-group">
+            <div class="be-label-row">
+              <span class="name">${b.name}</span>
+              <span class="sessions">${b.sessions === 0 ? '✅ Yours' : 'Breakeven: ' + label}</span>
+            </div>
+            <div class="be-bar-outer">
+              <div class="be-bar-inner" style="width:${barW}%;background:${b.color}">
+                $${b.cost.toLocaleString()}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      document.getElementById('be-session-freq').textContent = r.sessionsPerWeek + ' sessions/week';
+
+      // Save to URL hash
+      saveToHash(inputs);
+    }
+
+    function applyPreset(name) {
+      const p = PRESETS[name];
+      document.getElementById('slider-battery').value = p.battery;
+      document.getElementById('slider-motor').value = p.motor;
+      document.getElementById('slider-throttle').value = p.throttle;
+      document.getElementById('slider-cost').value = p.cost;
+
+      // Update active preset button
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      recalc();
+    }
+
+    function saveToHash(inputs) {
+      const params = new URLSearchParams({
+        r: inputs.riderKg,
+        b: inputs.batteryKwh,
+        m: inputs.motorKw,
+        t: Math.round(inputs.throttlePct * 100),
+        c: inputs.buildCost,
+        s: inputs.style,
+        w: inputs.conditions,
+      });
+      history.replaceState(null, '', '#' + params.toString());
+    }
+
+    function loadFromHash() {
+      if (!location.hash) return;
+      try {
+        const params = new URLSearchParams(location.hash.substring(1));
+        if (params.has('r')) document.getElementById('slider-rider').value = params.get('r');
+        if (params.has('b')) document.getElementById('slider-battery').value = params.get('b');
+        if (params.has('m')) document.getElementById('slider-motor').value = params.get('m');
+        if (params.has('t')) document.getElementById('slider-throttle').value = params.get('t');
+        if (params.has('c')) document.getElementById('slider-cost').value = params.get('c');
+        if (params.has('s')) document.getElementById('sel-style').value = params.get('s');
+        if (params.has('w')) document.getElementById('sel-conditions').value = params.get('w');
+      } catch(e) { /* ignore bad hash */ }
+    }
+
+    function shareCalc() {
+      const url = window.location.href;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+          const btn = event.target;
+          const orig = btn.textContent;
+          btn.textContent = '✅ Link Copied!';
+          setTimeout(() => btn.textContent = orig, 2000);
+        });
+      } else {
+        prompt('Copy this link:', url);
+      }
+    }
+
+    // ─── Init ────────────────────────────────────────────────────────
+    loadFromHash();
+    recalc();
+  </script>
+</body>
+</html>
