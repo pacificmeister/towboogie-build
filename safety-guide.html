@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tow Boogie Safety & Maintenance Guide — Battery, Electrical & Water Safety (2026)</title>
+  <meta name="description" content="Essential safety and maintenance guide for DIY tow boogies. Covers battery safety, waterproofing, pre-ride checklists, emergency procedures, and long-term maintenance schedules.">
+  <meta name="keywords" content="tow boogie safety, DIY efoil safety, lithium battery water safety, tow boogie maintenance, electric foil safety checklist, tow device waterproofing, foil battery care, tow boogie pre-ride check">
+  <meta name="author" content="PacificMeister">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Tow Boogie Safety & Maintenance Guide — Complete 2026 Reference">
+  <meta property="og:description" content="Everything you need to know about tow boogie safety: battery handling, waterproofing, pre-ride checks, emergency procedures, and maintenance schedules. From the DIY eFoil pioneer.">
+  <meta property="og:url" content="https://pacificmeister.github.io/towboogie-build/safety-guide.html">
+  <meta property="og:site_name" content="PacificMeister">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tow Boogie Safety & Maintenance Guide">
+  <meta name="twitter:description" content="Battery safety, waterproofing, pre-ride checklists, and maintenance schedules for DIY tow boogies.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://pacificmeister.github.io/towboogie-build/safety-guide.html">
+
+  <!-- JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Tow Boogie Safety & Maintenance Guide",
+    "description": "Comprehensive safety and maintenance guide for DIY and commercial tow boogies. Covers battery safety, electrical waterproofing, pre-ride checklists, emergency procedures, and long-term maintenance.",
+    "author": {
+      "@type": "Person",
+      "name": "PacificMeister",
+      "url": "https://pacificmeister.github.io"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "PacificMeister",
+      "url": "https://pacificmeister.github.io"
+    },
+    "datePublished": "2026-03-14",
+    "dateModified": "2026-03-14",
+    "mainEntityOfPage": "https://pacificmeister.github.io/towboogie-build/safety-guide.html",
+    "keywords": ["tow boogie safety", "DIY efoil safety", "lithium battery water safety", "tow boogie maintenance", "foil battery care"]
+  }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is it safe to use a lithium battery in water?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, with proper waterproofing. The battery enclosure must be IP67 or better rated, with marine-grade cable glands (PG7/PG9) for all wire exits, and O-ring sealed lids. Never charge a battery that has been submerged or shows signs of water ingress. Use a Pelican-style case with proper gaskets for maximum safety."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I store my tow boogie battery safely?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Store lithium batteries at 40-60% charge (storage voltage ~3.8V per cell) in a cool, dry place away from flammable materials. Use a LiPo-safe bag or fireproof container. Never store fully charged or fully depleted. Check voltage monthly. For extended storage (1+ months), rebalance to storage voltage every 60 days."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What safety gear do I need for tow boogie riding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Essential: impact vest (flotation), wetsuit, foil-specific helmet. Strongly recommended: cut-resistant gloves (hydrofoils are sharp), quick-release tow rope attachment, marine whistle, and a buddy or spotter. Never ride alone in open water, especially when learning."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How often should I maintain my tow boogie?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "After every session: rinse with fresh water, check for water ingress, inspect tow rope and connections. Monthly: check all bolts and fasteners, inspect battery balance and cell voltages, clean and re-grease electrical contacts. Seasonally: full battery health check, replace O-rings and gaskets, inspect prop and motor for wear, recalibrate ESC if needed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What should I do if my tow boogie takes on water?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Stop using it immediately. Open the enclosure away from flammable materials. If the battery is wet, do NOT charge it. Disconnect all electrical connections. Rinse electronics with distilled water to remove salt, then dry thoroughly for 48+ hours. Inspect the battery for swelling, discoloration, or heat. If any cells are damaged, dispose of the battery safely at a hazardous waste facility — do not throw it in the trash."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .article-hero {
+      text-align: center;
+      padding: 80px 0 60px;
+      background: linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(249,115,22,0.08) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .article-hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .article-hero .meta {
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+    .article-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+    .article-body h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      color: var(--accent);
+    }
+    .article-body h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 32px 0 12px;
+      color: var(--text);
+    }
+    .article-body p {
+      margin-bottom: 16px;
+      color: var(--text);
+      line-height: 1.8;
+    }
+    .article-body ul, .article-body ol {
+      margin: 0 0 20px 24px;
+      line-height: 1.8;
+    }
+    .article-body li {
+      margin-bottom: 8px;
+    }
+    .article-body strong {
+      color: #fff;
+    }
+    .warning-box {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-left: 4px solid #ef4444;
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .warning-box .label {
+      font-weight: 700;
+      color: #ef4444;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .caution-box {
+      background: rgba(234,179,8,0.08);
+      border: 1px solid rgba(234,179,8,0.3);
+      border-left: 4px solid #eab308;
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .caution-box .label {
+      font-weight: 700;
+      color: #eab308;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .info-box {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .info-box .label {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .checklist {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 24px 0;
+    }
+    .checklist h3 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    .checklist ul {
+      list-style: none;
+      margin-left: 0;
+      padding-left: 0;
+    }
+    .checklist li {
+      position: relative;
+      padding-left: 32px;
+      margin-bottom: 10px;
+    }
+    .checklist li::before {
+      content: '☐';
+      position: absolute;
+      left: 0;
+      color: var(--text-dim);
+      font-size: 18px;
+    }
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin: 24px 0;
+    }
+    .schedule-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .schedule-card:hover {
+      border-color: var(--accent);
+    }
+    .schedule-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .schedule-card.after-session h4 { color: #22c55e; }
+    .schedule-card.monthly h4 { color: #eab308; }
+    .schedule-card.seasonal h4 { color: #f97316; }
+    .schedule-card.annual h4 { color: #ef4444; }
+    .schedule-card ul {
+      list-style: disc;
+      margin-left: 16px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .toc {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin: 24px 0;
+    }
+    .toc h3 {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 16px;
+    }
+    .toc ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .toc li {
+      margin-bottom: 6px;
+    }
+    .toc a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.15s;
+    }
+    .toc a:hover {
+      color: var(--accent);
+    }
+    .emergency-steps {
+      counter-reset: emergency;
+    }
+    .emergency-step {
+      position: relative;
+      padding-left: 48px;
+      margin-bottom: 20px;
+      counter-increment: emergency;
+    }
+    .emergency-step::before {
+      content: counter(emergency);
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 32px;
+      height: 32px;
+      background: rgba(239,68,68,0.15);
+      color: #ef4444;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    @media (max-width: 768px) {
+      .schedule-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+  <header class="header" style="position:sticky;top:0;z-index:100;">
+    <div class="container">
+      <div class="header-inner" style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;">
+        <div class="logo" style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:28px;">🚀</span>
+          <div>
+            <a href="index.html" style="font-size:18px;font-weight:800;color:#fff;text-decoration:none;">Tow Boogie Builder</a>
+            <p style="font-size:12px;color:var(--text-dim);margin:0;">by <a href="https://pacificmeister.github.io" style="color:var(--accent);">PacificMeister</a> · Open Source</p>
+          </div>
+        </div>
+        <nav style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <a href="index.html" style="color:var(--text-dim);font-size:14px;font-weight:600;padding:6px 12px;">⚙️ Configurator</a>
+          <a href="guide.html" style="color:var(--text-dim);font-size:14px;font-weight:600;padding:6px 12px;">📖 Build Guide</a>
+          <a href="calculator.html" style="color:var(--text-dim);font-size:14px;font-weight:600;padding:6px 12px;">⚡ Calculator</a>
+          <a href="compare.html" style="color:var(--text-dim);font-size:14px;font-weight:600;padding:6px 12px;">🏆 Compare</a>
+          <a href="what-is-a-tow-boogie.html" style="color:var(--text-dim);font-size:14px;font-weight:600;padding:6px 12px;">📚 Learn</a>
+          <a href="riding-guide.html" style="color:var(--text-dim);font-size:14px;font-weight:600;padding:6px 12px;">🏄 Riding Guide</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="article-hero">
+    <div class="container">
+      <h1>🛡️ Safety & Maintenance Guide</h1>
+      <p class="meta">Last updated March 2026 · 3,500+ words · By PacificMeister</p>
+      <p style="color:var(--text-dim);margin-top:8px;font-size:15px;">Everything you need to keep yourself — and your build — safe on the water.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <div class="article-body">
+
+    <div class="toc">
+      <h3>📋 Table of Contents</h3>
+      <ol>
+        <li><a href="#pre-ride">Pre-Ride Safety Checklist</a></li>
+        <li><a href="#personal-safety">Personal Safety Gear</a></li>
+        <li><a href="#battery-safety">Battery Safety (Critical)</a></li>
+        <li><a href="#electrical">Electrical & Waterproofing</a></li>
+        <li><a href="#foil-safety">Hydrofoil Safety</a></li>
+        <li><a href="#water-safety">On-Water Safety Rules</a></li>
+        <li><a href="#emergency">Emergency Procedures</a></li>
+        <li><a href="#maintenance">Maintenance Schedule</a></li>
+        <li><a href="#battery-care">Battery Care & Storage</a></li>
+        <li><a href="#troubleshooting">Troubleshooting Common Issues</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ol>
+    </div>
+
+    <p>Building and riding a tow boogie is an incredible experience — but it involves <strong>high-capacity lithium batteries near saltwater</strong>, sharp hydrofoil wings, and powerful electric motors. This guide covers everything you need to stay safe during the build, on the water, and in long-term maintenance. Whether you're building DIY or using a commercial unit like Zero Tow or Foil Fusion, these principles apply.</p>
+
+    <div class="warning-box">
+      <div class="label">⚠️ Important</div>
+      <p style="margin:0;">A tow boogie is a <strong>personal watercraft with a lithium battery pack</strong>. Treat it with the same respect you'd give any electrical system near water. Most incidents come from skipping safety steps, not from inherent design flaws.</p>
+    </div>
+
+    <!-- Section 1: Pre-Ride Checklist -->
+    <h2 id="pre-ride">1. Pre-Ride Safety Checklist</h2>
+
+    <p>Run through this before every session. It takes 5 minutes and could save your gear — or your life.</p>
+
+    <div class="checklist">
+      <h3>🔋 Battery & Electrical</h3>
+      <ul>
+        <li>Battery fully charged (check cell balance — max 0.05V difference between cells)</li>
+        <li>Enclosure sealed — O-ring clean, seated properly, no sand or debris</li>
+        <li>All cable glands tight (PG7/PG9) — check for visible gaps</li>
+        <li>XT60/XT90 connectors fully seated, no corrosion or green residue</li>
+        <li>BMS indicator green (no fault codes, no red LEDs)</li>
+        <li>ESC powers on correctly — listen for startup tone</li>
+      </ul>
+    </div>
+
+    <div class="checklist">
+      <h3>🔧 Mechanical</h3>
+      <ul>
+        <li>Propeller tight, no cracks or chips, safety guard in place</li>
+        <li>Tow rope in good condition — no fraying, knots, or UV damage</li>
+        <li>Quick-release mechanism tested (pull it, confirm it releases)</li>
+        <li>Motor mount bolts tight (check with wrench, not just fingers)</li>
+        <li>Hull/enclosure integrity — no cracks, dents, or delamination</li>
+        <li>Drain plug seated (if applicable)</li>
+      </ul>
+    </div>
+
+    <div class="checklist">
+      <h3>🌊 Conditions</h3>
+      <ul>
+        <li>Wind speed under 20 knots (beginners: under 12 knots)</li>
+        <li>Surf manageable for your skill level</li>
+        <li>No thunderstorms within 30 miles</li>
+        <li>Current and tide checked — know your exit points</li>
+        <li>Water temp appropriate for your exposure protection</li>
+        <li>Other water users identified — stay clear of swimmers, boats, surfers</li>
+      </ul>
+    </div>
+
+    <div class="checklist">
+      <h3>👤 Personal</h3>
+      <ul>
+        <li>Impact vest on and zipped</li>
+        <li>Helmet secured (foil-specific recommended)</li>
+        <li>Remote control lanyard attached to wrist</li>
+        <li>Someone knows you're going out (buddy system)</li>
+        <li>Phone in waterproof pouch accessible from shore</li>
+      </ul>
+    </div>
+
+
+    <!-- Section 2: Personal Safety Gear -->
+    <h2 id="personal-safety">2. Personal Safety Gear</h2>
+
+    <p>Foiling adds specific risks that surfing and paddling don't have. A hydrofoil is essentially a sharp metal blade moving at speed underwater. Treat your gear selection accordingly.</p>
+
+    <h3>Essential (Non-Negotiable)</h3>
+    <ul>
+      <li><strong>Impact vest with flotation</strong> — You're in open water with equipment that can fail. A coast-guard-approved PFD is even better. At minimum, wear a vest that provides buoyancy if you're separated from your board.</li>
+      <li><strong>Wetsuit or rash guard</strong> — Protection from both temperature and abrasion. Even in warm water, neoprene provides padding against foil impacts.</li>
+      <li><strong>Foil helmet</strong> — Hard-shell helmets designed for water sports (Gath, Sandbox, etc.). Foil masts and wings can cause serious head injuries during falls. This is not optional.</li>
+    </ul>
+
+    <h3>Strongly Recommended</h3>
+    <ul>
+      <li><strong>Cut-resistant gloves</strong> — Hydrofoil leading edges and trailing edges are sharp. Gloves protect during handling on the beach and if you contact the foil during a wipeout. Sailing or diving gloves work well.</li>
+      <li><strong>Booties</strong> — Protect your feet from the foil, rocks, and coral. Reef boots with a hard sole are ideal.</li>
+      <li><strong>Marine whistle</strong> — Clip one to your vest. If you're separated from your gear and can't paddle back, a whistle carries farther than your voice.</li>
+      <li><strong>Sunscreen</strong> — You'll be on the water for extended periods. Reef-safe SPF 50+ minimum.</li>
+    </ul>
+
+    <div class="info-box">
+      <div class="label">💡 Pro Tip</div>
+      <p style="margin:0;">Some experienced riders skip the helmet once they're comfortable. Don't. Even pros crash unexpectedly — a mast to the head at speed can cause serious injury regardless of your skill level. The foil community increasingly treats helmets as standard, not optional.</p>
+    </div>
+
+
+    <!-- Section 3: Battery Safety -->
+    <h2 id="battery-safety">3. Battery Safety (Critical)</h2>
+
+    <p>The lithium battery pack is the most dangerous component in your build. A typical tow boogie runs a <strong>12S (44.4V nominal) pack with 10-20Ah capacity</strong> — that's 444-888 watt-hours of energy in a sealed enclosure near saltwater. Understanding battery safety isn't optional; it's the foundation of a safe build.</p>
+
+    <div class="warning-box">
+      <div class="label">⚠️ Lithium Battery Hazards</div>
+      <p style="margin:0;">Lithium-ion batteries can cause <strong>thermal runaway</strong> — a self-sustaining, exothermic reaction that produces toxic gases, intense heat (up to 600°C/1100°F), and fire. This can be triggered by overcharging, physical damage, short circuits, or water ingress into cells. Thermal runaway in one cell can cascade to adjacent cells within seconds.</p>
+    </div>
+
+    <h3>Battery Selection Rules</h3>
+    <ul>
+      <li><strong>Use quality cells only</strong> — Samsung, Molicel, LG, Sony/Murata. Never use off-brand or reclaimed cells of unknown origin. The cost difference is small compared to the risk.</li>
+      <li><strong>Match cell ratings</strong> — Your peak discharge current must stay within the cell's continuous discharge rating. A 12S4P pack with 30A-rated cells gives you 120A continuous. Over-discharging cells generates heat and accelerates degradation.</li>
+      <li><strong>Always use a BMS</strong> — A Battery Management System prevents overcharge, over-discharge, over-current, and short-circuit conditions. Use a BMS rated for your pack's continuous current plus a safety margin. Smart BMS units with Bluetooth monitoring are worth the extra cost.</li>
+      <li><strong>Fuse everything</strong> — Install an inline fuse between the battery and ESC. If a short circuit occurs, the fuse blows before the wiring catches fire. Use a marine-grade ANL fuse holder rated for your pack voltage.</li>
+    </ul>
+
+    <h3>Charging Safety</h3>
+    <ul>
+      <li><strong>Never charge unattended</strong> — Stay in the same room while charging. Most battery fires start during charging.</li>
+      <li><strong>Charge on a fireproof surface</strong> — Concrete, ceramic tile, or in a LiPo-safe bag. Never charge on carpet, wood, or near flammable materials.</li>
+      <li><strong>Use the correct charger</strong> — Match the charger to your pack chemistry and cell count. A 12S Li-ion pack charges to 50.4V max (4.2V per cell). Using the wrong charger can overcharge cells and cause thermal runaway.</li>
+      <li><strong>Charge at 1C or lower</strong> — For a 12Ah pack, charge at 12A or less. Slower charging extends cell life and reduces heat. 0.5C (6A for a 12Ah pack) is even safer.</li>
+      <li><strong>Never charge a damaged or wet battery</strong> — If the enclosure took on water, assume the battery is compromised until proven otherwise. Let it dry completely (48+ hours) and inspect for damage before considering charging.</li>
+      <li><strong>Temperature limits</strong> — Don't charge below 0°C (32°F) or above 45°C (113°F). Cold charging lithium-ion cells causes lithium plating, which permanently damages cells and increases fire risk.</li>
+    </ul>
+
+    <div class="caution-box">
+      <div class="label">⚡ Saltwater + Lithium = Emergency</div>
+      <p style="margin:0;">Saltwater is highly conductive. If it reaches your battery cells or high-voltage wiring, it creates short circuits that can trigger thermal runaway. This is why <strong>waterproofing is the single most important aspect of your build</strong>. Over-engineer it. Then double-check it.</p>
+    </div>
+
+
+    <!-- Section 4: Electrical & Waterproofing -->
+    <h2 id="electrical">4. Electrical & Waterproofing</h2>
+
+    <p>Your tow boogie lives in the most corrosive environment on earth — saltwater. Every electrical connection, every wire exit, every seal is a potential failure point. Build it like a submarine, not a toy.</p>
+
+    <h3>Enclosure Design</h3>
+    <ul>
+      <li><strong>IP67 minimum</strong> — Your battery enclosure should survive temporary submersion to 1 meter. IP68 is better. Pelican cases, Apache cases, and custom fiberglass enclosures with proper gaskets all work.</li>
+      <li><strong>Gasket inspection</strong> — Before every session, inspect the O-ring or gasket. Clean off sand, salt, and debris. Apply silicone grease to maintain the seal. Replace gaskets annually or whenever they show compression set (flat spots), cracking, or discoloration.</li>
+      <li><strong>Pressure equalization</strong> — Temperature changes cause pressure differentials that can break seals. Install a GORE-TEX vent or pressure equalization valve if your enclosure will be exposed to wide temperature swings.</li>
+    </ul>
+
+    <h3>Cable Management</h3>
+    <ul>
+      <li><strong>Marine-grade cable glands</strong> — Use PG7, PG9, or PG11 cable glands (match to your wire diameter). Nylon glands with rubber inserts provide waterproof compression seals around wires. Tighten firmly but don't over-torque.</li>
+      <li><strong>Silicone wire</strong> — Use silicone-insulated wire (not PVC) for all connections. Silicone wire is more flexible, heat-resistant, and resists UV degradation. 10AWG minimum for power leads, 14-16AWG for signal wires.</li>
+      <li><strong>Connectors</strong> — XT60 or XT90 for main power (XT90 preferred for higher-current setups). Apply dielectric grease to connectors to prevent corrosion. Inspect after every saltwater session.</li>
+      <li><strong>Heat shrink everything</strong> — Use adhesive-lined heat shrink on all solder joints and exposed wire ends. The adhesive creates a waterproof seal.</li>
+    </ul>
+
+    <h3>Anti-Corrosion</h3>
+    <ul>
+      <li><strong>Conformal coating</strong> — Spray your ESC and any exposed circuit boards with conformal coating (Corrosion-X or MG Chemicals 419D). This creates a transparent waterproof barrier on electronics.</li>
+      <li><strong>Dielectric grease</strong> — Apply to all electrical connections, switch contacts, and charge port pins.</li>
+      <li><strong>Fresh water rinse</strong> — After every saltwater session, rinse the entire tow boogie with fresh water. Pay special attention to connectors, switches, and the area around cable glands.</li>
+      <li><strong>Sacrificial anode</strong> — For aluminum enclosures or metal motor mounts, attach a zinc sacrificial anode to prevent galvanic corrosion in saltwater.</li>
+    </ul>
+
+    <div class="info-box">
+      <div class="label">💡 From the Community</div>
+      <p style="margin:0;">FOIL.zone builders have found that <strong>the #1 cause of tow boogie failure is water ingress through cable glands</strong> that weren't tightened properly or had the wrong diameter rubber insert. Always test your sealed enclosure in a bathtub or bucket for 30 minutes before the first ocean session. Put a paper towel inside — if it's wet after the test, fix the seals.</p>
+    </div>
+
+
+    <!-- Section 5: Foil Safety -->
+    <h2 id="foil-safety">5. Hydrofoil Safety</h2>
+
+    <p>Hydrofoils are beautiful pieces of engineering — and they're also sharp metal blades moving at 15-25 mph underwater. Respect them.</p>
+
+    <h3>Handling on Land</h3>
+    <ul>
+      <li><strong>Always carry a foil with the wing edges facing away from you</strong> — Grip the fuselage or mast, not the wing itself.</li>
+      <li><strong>Set up on soft ground</strong> — Sand, grass, or a towel. Never place a foil on concrete where it can be knocked over. A falling foil can gash a foot or shin badly.</li>
+      <li><strong>Wing covers</strong> — Use padded wing covers during transport. They protect the foil and protect you from the foil.</li>
+      <li><strong>Bolt check</strong> — Before every session, check all foil bolts with a wrench. Vibration loosens bolts over time. A loose mast bolt at speed = sudden loss of control.</li>
+    </ul>
+
+    <h3>In the Water</h3>
+    <ul>
+      <li><strong>Fall flat, not feet-first</strong> — If you fall, try to land flat (belly flop). Going feet-first puts your legs directly in the path of the foil. It's counterintuitive but safer.</li>
+      <li><strong>Cover your head</strong> — When you fall, get your arms over your head before surfacing. The board and foil may be nearby and swinging.</li>
+      <li><strong>Maintain distance</strong> — Keep at least 30 meters (100 ft) from other water users. A foil rider who wipes out has no control over where the board and foil go.</li>
+      <li><strong>Know your spot</strong> — Avoid shallow water where the foil could hit the bottom, causing sudden stops or ejections.</li>
+    </ul>
+
+
+    <!-- Section 6: Water Safety -->
+    <h2 id="water-safety">6. On-Water Safety Rules</h2>
+
+    <h3>The Golden Rules</h3>
+    <ol>
+      <li><strong>Never ride alone</strong> — Always have a buddy or spotter, especially when learning. If your tow boogie dies and you can't paddle back, you need someone who knows where you are.</li>
+      <li><strong>Start close to shore</strong> — Don't venture past comfortable swimming distance until you're confident in your gear and your skills.</li>
+      <li><strong>Know your battery range</strong> — Your tow boogie has limited energy. Use the <a href="calculator.html" style="color:var(--accent);">Performance Calculator</a> to understand your runtime. Always keep a 20% battery reserve for the ride back.</li>
+      <li><strong>Check weather and conditions before going out</strong> — Offshore wind can push you out faster than you can paddle back. Avoid onshore storms and lightning.</li>
+      <li><strong>Yield to everyone</strong> — You're the powered craft. Yield to surfers, swimmers, paddlers, and sailboats. Always.</li>
+    </ol>
+
+    <h3>Remote Control Safety</h3>
+    <ul>
+      <li><strong>Deadman switch</strong> — Your remote should have a trigger that cuts motor power when released. If you don't have one, add one. If the remote falls from your hand, the motor should stop immediately.</li>
+      <li><strong>Wrist lanyard</strong> — Attach the remote to your wrist so you don't lose it during wipeouts.</li>
+      <li><strong>Range test</strong> — Know the maximum range of your remote. Most 2.4GHz remotes work to ~30 meters (100 ft) over water. Beyond that, you could lose connection.</li>
+      <li><strong>Waterproof your remote</strong> — Either buy a waterproof remote (Maytech waterproof VESC remote) or seal a standard remote in a waterproof pouch. A dead remote means no throttle control.</li>
+    </ul>
+
+    <div class="caution-box">
+      <div class="label">🚨 Prop Safety</div>
+      <p style="margin:0;">The propeller is the most immediately dangerous part of your tow boogie. <strong>Always install a propeller guard/shroud</strong>. A spinning prop can cause severe lacerations in an instant. Never reach near the prop while the battery is connected. When performing maintenance, disconnect the battery first — ESCs can sometimes glitch and spin the motor unexpectedly.</p>
+    </div>
+
+
+    <!-- Section 7: Emergency Procedures -->
+    <h2 id="emergency">7. Emergency Procedures</h2>
+
+    <h3>Water Ingress Detected</h3>
+    <div class="emergency-steps">
+      <div class="emergency-step">
+        <strong>Stop riding immediately.</strong> Get to shore. Don't try to "finish the session."
+      </div>
+      <div class="emergency-step">
+        <strong>Power off the ESC and disconnect the battery.</strong> Do this before opening the enclosure. Water + live electrical connections = short circuits.
+      </div>
+      <div class="emergency-step">
+        <strong>Open the enclosure in a safe area</strong> — away from vehicles, flammable materials, and other people. If you see or smell smoke, step back and let it vent.
+      </div>
+      <div class="emergency-step">
+        <strong>Inspect the battery.</strong> Look for swelling, discoloration, heat, or hissing sounds. If any of these are present, place the battery in a bucket of sand or on concrete and monitor it from a distance.
+      </div>
+      <div class="emergency-step">
+        <strong>Rinse all electronics with distilled water</strong> to remove salt, then air dry for 48+ hours before reconnecting.
+      </div>
+      <div class="emergency-step">
+        <strong>Do NOT charge the battery</strong> until you've verified cell voltages individually and confirmed no internal damage.
+      </div>
+    </div>
+
+    <h3>Battery Fire / Thermal Runaway</h3>
+    <div class="emergency-steps">
+      <div class="emergency-step">
+        <strong>Get away from the battery.</strong> Minimum 5 meters (15 ft). Lithium fires produce toxic fumes (hydrogen fluoride).
+      </div>
+      <div class="emergency-step">
+        <strong>Do NOT use a standard fire extinguisher.</strong> Class D (metal fire) extinguishers or large amounts of water are the only effective options. Water won't stop thermal runaway but it cools surrounding cells and slows the cascade.
+      </div>
+      <div class="emergency-step">
+        <strong>Call 911/emergency services.</strong> Tell them it's a lithium battery fire. They need specific equipment and training.
+      </div>
+      <div class="emergency-step">
+        <strong>Keep people away.</strong> The fumes are toxic. Move upwind. If the fire is in an enclosed space, evacuate immediately.
+      </div>
+      <div class="emergency-step">
+        <strong>Let it burn out.</strong> Once thermal runaway starts, it will consume all the stored energy. Your job is to keep it from spreading to other materials.
+      </div>
+    </div>
+
+    <h3>Lost at Sea / Equipment Failure</h3>
+    <ul>
+      <li><strong>Stay with your board</strong> — It floats. You might not (without a vest). The board is also more visible to rescuers than a head in the water.</li>
+      <li><strong>Signal for help</strong> — Whistle, wave your arms, or use your phone if waterproofed. Three of anything (3 whistle blasts, 3 arm waves) is the international distress signal.</li>
+      <li><strong>Don't panic-swim</strong> — If you can't paddle back, conserve energy. Float, stay visible, wait for help. This is why you told someone you were going out (#1 rule).</li>
+      <li><strong>Consider a PLB</strong> — A Personal Locator Beacon (PLB) sends your GPS coordinates to rescue services at the push of a button. For open-ocean riding, it's worth the investment.</li>
+    </ul>
+
+
+    <!-- Section 8: Maintenance Schedule -->
+    <h2 id="maintenance">8. Maintenance Schedule</h2>
+
+    <p>Consistent maintenance extends the life of your tow boogie and prevents failures on the water. Here's a structured schedule:</p>
+
+    <div class="schedule-grid">
+      <div class="schedule-card after-session">
+        <h4>✅ After Every Session</h4>
+        <ul>
+          <li>Rinse with fresh water (all surfaces)</li>
+          <li>Check enclosure for water ingress</li>
+          <li>Inspect tow rope for fraying</li>
+          <li>Wipe down connectors</li>
+          <li>Charge battery to storage voltage if not riding again within 48h</li>
+          <li>Dry remote controller</li>
+        </ul>
+      </div>
+
+      <div class="schedule-card monthly">
+        <h4>📅 Monthly</h4>
+        <ul>
+          <li>Check all bolts and fasteners (motor, prop, enclosure)</li>
+          <li>Inspect cell balance (BMS app or multimeter)</li>
+          <li>Clean and re-grease electrical contacts</li>
+          <li>Inspect prop for nicks, bends, or imbalance</li>
+          <li>Check tow rope quick-release mechanism</li>
+          <li>Test kill switch / deadman function</li>
+        </ul>
+      </div>
+
+      <div class="schedule-card seasonal">
+        <h4>🔄 Every 3 Months</h4>
+        <ul>
+          <li>Full battery capacity test (charge/discharge cycle)</li>
+          <li>Replace O-rings and gaskets</li>
+          <li>Inspect motor bearings (spin by hand, listen for roughness)</li>
+          <li>Check wiring for chafe or heat damage</li>
+          <li>Tighten all cable glands</li>
+          <li>Re-apply conformal coating if needed</li>
+        </ul>
+      </div>
+
+      <div class="schedule-card annual">
+        <h4>🗓️ Annual</h4>
+        <ul>
+          <li>Full battery internal resistance test (per cell)</li>
+          <li>Replace tow rope</li>
+          <li>Recalibrate ESC</li>
+          <li>Inspect hull/enclosure for stress cracks</li>
+          <li>Replace remote battery and test range</li>
+          <li>Review and replace any corroded hardware</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- Section 9: Battery Care & Storage -->
+    <h2 id="battery-care">9. Battery Care & Storage</h2>
+
+    <p>Your battery pack is the most expensive component in your tow boogie, and proper care can double its useful life.</p>
+
+    <h3>Storage Rules</h3>
+    <ul>
+      <li><strong>Storage voltage: 3.7-3.85V per cell</strong> — This is ~40-60% state of charge. Storing at full charge (4.2V) or empty (3.0V) degrades cells faster than anything else.</li>
+      <li><strong>Temperature: 15-25°C (59-77°F)</strong> — Cool and stable. Avoid garages that get hot in summer or freezing in winter. Heat is the #1 killer of lithium cells.</li>
+      <li><strong>Dry environment</strong> — Keep away from moisture, even condensation. Store in a LiPo-safe bag inside a ventilated container.</li>
+      <li><strong>Away from flammables</strong> — Don't store batteries next to gasoline, paint, or in a vehicle. If thermal runaway occurs during storage, you don't want it near fuel.</li>
+      <li><strong>Check monthly</strong> — Verify voltage hasn't drifted below 3.0V per cell (BMS should prevent this, but verify). If any cell is below 2.5V, the cell is damaged — don't try to revive it.</li>
+    </ul>
+
+    <h3>Maximizing Battery Life</h3>
+    <ul>
+      <li><strong>Avoid full charge/discharge cycles</strong> — Charge to 4.1V per cell (instead of 4.2V) and don't discharge below 3.3V. This reduces usable capacity by ~15% but can double the number of cycles your pack will last.</li>
+      <li><strong>Don't charge immediately after riding</strong> — Let the pack cool to ambient temperature first (at least 30 minutes). Charging hot cells accelerates degradation.</li>
+      <li><strong>Avoid high-current sustained draws</strong> — Short bursts for tow-ups are fine. Sustained full-throttle for minutes at a time generates heat and wears cells faster.</li>
+      <li><strong>Keep cells balanced</strong> — Use a balance charger and check cell-to-cell voltage regularly. A cell that consistently drifts low may be failing — monitor it closely.</li>
+    </ul>
+
+    <div class="info-box">
+      <div class="label">📊 Battery Lifespan Expectations</div>
+      <p style="margin:0;">A well-maintained 12S Li-ion pack with quality cells (Samsung 40T, Molicel P42A) should last <strong>300-500 charge cycles</strong> before capacity drops to 80% of original. At 2-3 sessions per week, that's 2-4 years of use. Poor care (full charge storage, heat exposure, over-discharge) can cut this to under 100 cycles.</p>
+    </div>
+
+
+    <!-- Section 10: Troubleshooting -->
+    <h2 id="troubleshooting">10. Troubleshooting Common Issues</h2>
+
+    <h3>Motor Won't Start</h3>
+    <ul>
+      <li>Check battery charge level (BMS LED or app)</li>
+      <li>Verify XT60/XT90 connectors fully seated</li>
+      <li>Check for water in connectors (green corrosion = water ingress)</li>
+      <li>Try different throttle positions — some ESCs need a zero-throttle calibration on startup</li>
+      <li>Check remote pairing — some remotes need re-binding after battery swaps</li>
+    </ul>
+
+    <h3>Motor Stutters or Cuts Out</h3>
+    <ul>
+      <li>Low battery (BMS cutting power to protect cells)</li>
+      <li>Loose connector creating intermittent contact</li>
+      <li>Remote out of range or low battery</li>
+      <li>ESC overheating (check ventilation, reduce duty cycle)</li>
+      <li>Phase wire issue (inspect motor cable connections)</li>
+    </ul>
+
+    <h3>Tow Boogie Takes on Water</h3>
+    <ul>
+      <li>Check cable gland tightness — this is cause #1</li>
+      <li>Inspect O-ring/gasket for damage, sand, or compression set</li>
+      <li>Look for hairline cracks in the enclosure (especially around mounting holes)</li>
+      <li>Check drain plug if installed</li>
+      <li>Verify switch seal integrity (power switches are common leak points)</li>
+    </ul>
+
+    <h3>Poor Range / Battery Drains Fast</h3>
+    <ul>
+      <li>Cell balance issue — check individual cell voltages</li>
+      <li>Degraded cells (internal resistance increased) — test with battery analyzer</li>
+      <li>Prop damage causing inefficiency (bent blade = more drag = more current)</li>
+      <li>Riding in strong currents or against wind (external factors)</li>
+      <li>Weed or debris on prop/intake</li>
+    </ul>
+
+
+    <!-- Section 11: FAQ -->
+    <h2 id="faq">11. Frequently Asked Questions</h2>
+
+    <div class="info-box" style="border-left-color: var(--green);">
+      <div class="label" style="color: var(--green);">Q: Is it safe to use a lithium battery in water?</div>
+      <p style="margin:0;">Yes, with proper waterproofing. The battery enclosure must be IP67 or better rated, with marine-grade cable glands for all wire exits and O-ring sealed lids. Never charge a battery that has been submerged or shows signs of water ingress. Thousands of eFoil and tow boogie riders use lithium batteries in saltwater every day — the technology is proven when built correctly.</p>
+    </div>
+
+    <div class="info-box" style="border-left-color: var(--green);">
+      <div class="label" style="color: var(--green);">Q: How do I store my tow boogie battery safely?</div>
+      <p style="margin:0;">Store at 40-60% charge (storage voltage ~3.8V per cell) in a cool, dry place away from flammable materials. Use a LiPo-safe bag or fireproof container. Never store fully charged or fully depleted. Check voltage monthly. For extended storage (1+ months), rebalance to storage voltage every 60 days.</p>
+    </div>
+
+    <div class="info-box" style="border-left-color: var(--green);">
+      <div class="label" style="color: var(--green);">Q: What safety gear do I need?</div>
+      <p style="margin:0;">Essential: impact vest with flotation, wetsuit, and a foil-specific helmet. Strongly recommended: cut-resistant gloves, booties, marine whistle, and a buddy or spotter. Never ride alone in open water, especially when learning.</p>
+    </div>
+
+    <div class="info-box" style="border-left-color: var(--green);">
+      <div class="label" style="color: var(--green);">Q: How often should I maintain my tow boogie?</div>
+      <p style="margin:0;">After every session: rinse with fresh water, check for water ingress, inspect tow rope. Monthly: check all bolts and cell balance, clean contacts. Seasonally: full battery test, replace O-rings, inspect motor bearings. Annually: battery internal resistance test, replace tow rope, recalibrate ESC.</p>
+    </div>
+
+    <div class="info-box" style="border-left-color: var(--green);">
+      <div class="label" style="color: var(--green);">Q: What should I do if my tow boogie takes on water?</div>
+      <p style="margin:0;">Stop immediately and get to shore. Power off the ESC and disconnect the battery before opening the enclosure. Inspect for damage. Rinse electronics with distilled water to remove salt, then dry for 48+ hours. Do NOT charge the battery until you've verified cell voltages and confirmed no damage. If cells are swollen or hot, place on concrete and monitor from a distance.</p>
+    </div>
+
+
+    <!-- CTA Section -->
+    <div style="text-align:center;padding:60px 0 20px;border-top:1px solid var(--border);margin-top:60px;">
+      <h2 style="color:#fff;margin-bottom:12px;">Ready to Build Safely?</h2>
+      <p style="color:var(--text-dim);margin-bottom:24px;">Now that you know how to stay safe, plan your build with our interactive tools.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--accent);color:#000;font-weight:700;border-radius:var(--radius-sm);text-decoration:none;font-size:16px;">⚙️ Build Configurator</a>
+        <a href="guide.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--surface-2);color:var(--text);font-weight:700;border-radius:var(--radius-sm);text-decoration:none;font-size:16px;border:1px solid var(--border);">📖 Build Guide</a>
+        <a href="riding-guide.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--surface-2);color:var(--text);font-weight:700;border-radius:var(--radius-sm);text-decoration:none;font-size:16px;border:1px solid var(--border);">🏄 Riding Guide</a>
+      </div>
+    </div>
+
+    <!-- Community Link -->
+    <div style="text-align:center;padding:30px 0;">
+      <p style="color:var(--text-dim);font-size:14px;">
+        Have safety tips to share? Join the community at
+        <a href="https://foil.zone" style="color:var(--accent);">FOIL.zone</a>
+        · Built with 🤙 by <a href="https://pacificmeister.github.io" style="color:var(--accent);">PacificMeister</a>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer style="border-top:1px solid var(--border);padding:24px 0;text-align:center;color:var(--text-muted);font-size:13px;">
+    <div class="container">
+      <p>© 2026 PacificMeister · Open-source tools for the foiling community · <a href="https://foil.zone" style="color:var(--text-dim);">FOIL.zone</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
